@@ -1,18 +1,19 @@
 import { createGlobalStyle } from 'styled-components'
 export default createGlobalStyle`
-* {
+  * {
     font-feature-settings: "liga" on, "calt" on;
-  -webkit-font-feature-settings: "liga" on, "calt" on;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: 'Montserrat', sans-serif;
-  text-decoration: none;
-  list-style-type: none;
-}
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
+    -webkit-font-feature-settings: "liga" on, "calt" on;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    list-style-type: none;
+  }
+  html {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
 *,
 *:before,
 *:after {
