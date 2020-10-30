@@ -6,7 +6,13 @@ const Header: React.FC = () => {
   return (
     <>
       <S.Container>
-        <Image src="/images/cloud.svg" alt="Uperttech" unsized priority />
+        <Image
+          src="/images/logo.png"
+          alt="Uperttech"
+          width={220}
+          height={20}
+          priority
+        />
         <S.Navigation>
           <Link href="/">
             <a>Quem somos</a>
