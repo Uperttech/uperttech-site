@@ -1,16 +1,25 @@
 import styled from 'styled-components'
+import Image from 'next/image'
 
-export const Container = styled.div`
+export const Container = styled.div<{ toggleBackground?: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  padding: 25px 40px;
+  padding: ${props => (props.toggleBackground ? '15px' : '25px')} 40px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: all ease-in-out 0.5s;
+  background: ${props => (props.toggleBackground ? '#FFFFFF' : '')};
+  box-shadow: ${props =>
+    props.toggleBackground ? '0 2px 2px rgba(0, 0, 0, 0.08)' : ''};
 `
+export const Logo = styled(Image)`
+  cursor: pointer;
+`
+
 export const Navigation = styled.nav`
   width: 100%;
   max-width: 500px;
