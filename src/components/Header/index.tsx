@@ -3,14 +3,14 @@ import * as S from './styles'
 import Link from 'next/link'
 
 const Header: React.FC = () => {
-  const [blackHeader, setBlackHeader] = useState(false)
+  const [toggleBackgroundHeader, setToggleBackgroundHeader] = useState(false)
 
   useEffect(() => {
     const scrollListener = () => {
       if (window.scrollY > 300) {
-        setBlackHeader(true)
+        setToggleBackgroundHeader(true)
       } else {
-        setBlackHeader(false)
+        setToggleBackgroundHeader(false)
       }
     }
     window.addEventListener('scroll', scrollListener)
@@ -21,7 +21,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <S.Container toggleBackground={blackHeader}>
+      <S.Container toggleBackground={toggleBackgroundHeader}>
         <Link href="/#home" passHref>
           <S.Logo
             src="/images/logo.png"
