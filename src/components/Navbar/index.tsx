@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   return (
     <>
       <S.Container toggleBackground={toggleBackgroundHeader}>
-        <Link href="/#home" passHref>
+        <Link href="#" passHref>
           <S.Logo
             src="/images/logo.png"
             alt="Uperttech"
@@ -32,13 +32,13 @@ const Header: React.FC = () => {
           />
         </Link>
         <S.Navigation>
-          <Link href="/#about">
+          <Link href="#quemsomos">
             <a>Quem somos</a>
           </Link>
-          <Link href="/#services">
+          <Link href="#servicos">
             <a>Serviços</a>
           </Link>
-          <Link href="/products" passHref>
+          <Link href="/produtos" passHref>
             <S.NavigateToProducts>Soluções</S.NavigateToProducts>
           </Link>
         </S.Navigation>

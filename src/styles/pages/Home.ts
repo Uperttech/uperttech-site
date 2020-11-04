@@ -28,6 +28,7 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  padding-bottom: 100px;
 `
 
 export const Background = styled(Image)`
@@ -54,7 +55,7 @@ export const WrapperMainContent = styled.div`
     font-size: min(4vw, 60px);
     width: 750px;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
     margin-top: 150px;
     animation: ${appearFromLeft} 1s;
   }
@@ -119,28 +120,29 @@ export const HeaderAbout = styled.div`
 
 export const Grid = styled.ul`
   margin-top: 80px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(250px, 1fr));
-  grid-gap: 0 100px;
-  > li {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+`
 
-    > h4 {
-      font-size: 28px;
-      color: #112b7d;
-      font-weight: bold;
-    }
+export const GridItem = styled.li`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
 
-    > p {
-      margin-top: 16px;
-      color: #8a8a8a;
-      font-size: 18px;
-      text-align: center;
-      line-height: 24px;
-    }
+  > h4 {
+    font-size: 28px;
+    color: #112b7d;
+    font-weight: bold;
+  }
+
+  > p {
+    margin-top: 16px;
+    color: #8a8a8a;
+    font-size: 18px;
+    text-align: center;
+    line-height: 24px;
   }
 `
 
@@ -159,29 +161,30 @@ export const WrapperServices = styled.div`
   display: flex;
   justify-content: space-between;
 `
+
 export const DropdownServices = styled.div`
   width: 100%;
   max-width: 530px;
   padding: 0 20px;
+`
 
-  > div {
-    color: #112b7d;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    padding: 15px 20px 15px 30px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 200ms ease-in-out;
-    & + div {
-      margin-top: 20px;
-    }
+export const DropdownItem = styled.div`
+  color: #112b7d;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 15px 20px 15px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  & + div {
+    margin-top: 20px;
+  }
 
-    :hover {
-      box-shadow: 1px 2px 8px rgba(76, 113, 251, 0.25);
-    }
+  :hover {
+    box-shadow: 1px 2px 8px rgba(76, 113, 251, 0.25);
   }
 `
 

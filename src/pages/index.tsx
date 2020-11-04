@@ -1,5 +1,5 @@
 import { MdKeyboardArrowDown } from 'react-icons/md'
-import Header from '~/components/Header'
+import Navbar from '~/components/Navbar'
 import Link from 'next/link'
 
 import * as S from '~/styles/pages/Home'
@@ -7,23 +7,23 @@ import * as S from '~/styles/pages/Home'
 const Home: React.FC = () => {
   return (
     <S.Container id="home">
-      <Header />
+      <Navbar />
       <S.Background src="/images/background.svg" unsized />
 
       <S.MainContent>
         <S.WrapperMainContent>
           <h1>Soluções inteligentes para modernizar sua empresa</h1>
-          <Link href="/budget" passHref>
+          <Link href="/orcamento" passHref>
             <S.NavigateToBudget>Solicitar orçamento</S.NavigateToBudget>
           </Link>
           <S.ArtImageBackground src="/images/art.svg" alt="background" />
         </S.WrapperMainContent>
       </S.MainContent>
 
-      <S.About>
+      <S.About id="quemsomos">
         <S.WrapperAbout>
           <S.HeaderAbout>
-            <h3 id="about">Quem somos</h3>
+            <h3>Quem somos</h3>
             <p>
               Com o impulso de melhorar continuamente a UPERTTECH foi criada no
               ano de 2020, tendo como diretriz a entrega de soluções
@@ -32,60 +32,38 @@ const Home: React.FC = () => {
             </p>
           </S.HeaderAbout>
           <S.Grid>
-            <li>
-              <h4>Missão</h4>
-              <p>
-                Criar produtos inovadores que supere as expectativas de nossos
-                clientes e contribuam para a sociedade como um todo.
-              </p>
-            </li>
-            <li>
-              <h4>Valores</h4>
-              <p>
-                Pró-atividade.
-                <br />
-                Comprometimento.
-                <br />
-                Compromisso com os prazos.
-                <br />
-                Inovação.
-                <br />
-              </p>
-            </li>
-            <li>
-              <h4>Visão</h4>
-              <p>
-                Ser uma referência de excelência em soluções, na área de
-                tecnologia da informação e processos organizacionais.
-              </p>
-            </li>
+            <GridItem title="Missão">
+              Criar produtos inovadores que superem as expectativas de nossos
+              clientes e contribuam para a sociedade como um todo.
+            </GridItem>
+            <GridItem title="Valores">
+              Pró-atividade.
+              <br />
+              Comprometimento.
+              <br />
+              Compromisso com os prazos.
+              <br />
+              Inovação.
+              <br />
+            </GridItem>
+            <GridItem title="Visão">
+              Ser uma referência de excelência em soluções, na área de
+              tecnologia da informação e processos organizacionais.
+            </GridItem>
           </S.Grid>
         </S.WrapperAbout>
       </S.About>
 
-      <S.Services id="services">
+      <S.Services id="servicos">
         <S.WrapperServices>
           <S.DropdownServices>
-            <div>
-              <strong>Consultoria em Gestão de TI</strong>
-              <MdKeyboardArrowDown size={20} color="#112B7D" />
-            </div>
-            <div>
-              <strong>Mentoria em Organização Digital</strong>
-              <MdKeyboardArrowDown size={20} color="#112B7D" />
-            </div>
-            <div>
-              <strong>Consultoria em desenvolvimento de sistemas</strong>
-              <MdKeyboardArrowDown size={20} color="#112B7D" />
-            </div>
-            <div>
-              <strong>Consultoria em Governança Corporativa</strong>
-              <MdKeyboardArrowDown size={20} color="#112B7D" />
-            </div>
-            <div>
-              <strong> Serviço de apoio administrativo</strong>
-              <MdKeyboardArrowDown size={20} color="#112B7D" />
-            </div>
+            <DropdownItem>Consultoria em Gestão de TI</DropdownItem>
+            <DropdownItem>Mentoria em Organização Digital</DropdownItem>
+            <DropdownItem>
+              Consultoria em desenvolvimento de sistemas
+            </DropdownItem>
+            <DropdownItem>Consultoria em Governança Corporativa</DropdownItem>
+            <DropdownItem>Serviço de apoio administrativo</DropdownItem>
           </S.DropdownServices>
           <S.Description>
             <h2>Nossos serviços</h2>
@@ -100,5 +78,19 @@ const Home: React.FC = () => {
     </S.Container>
   )
 }
+
+const DropdownItem: React.FC = ({ children }) => (
+  <S.DropdownItem>
+    <strong>{children}</strong>
+    <MdKeyboardArrowDown size={20} color="#112B7D" />
+  </S.DropdownItem>
+)
+
+const GridItem: React.FC<{ title: string }> = ({ title, children }) => (
+  <S.GridItem>
+    <h4>{title}</h4>
+    <p>{children}</p>
+  </S.GridItem>
+)
 
 export default Home

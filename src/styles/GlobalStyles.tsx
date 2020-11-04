@@ -38,8 +38,4 @@ ol,
 ul {
   list-style: none;
 }
-#root, body, html {
-  height: 100%;
-  width: 100%;
-}
 `
