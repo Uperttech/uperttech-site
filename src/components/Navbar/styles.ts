@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 export const Container = styled.div<{ toggleBackground?: boolean }>`
   position: fixed;
+  z-index: 99;
   top: 0;
   left: 0;
   right: 0;
@@ -52,6 +53,7 @@ export const NavigateToProducts = styled.a`
   font-size: 15px;
   cursor: pointer;
   transition: 0.2s ease;
+  border-radius: 4px;
 
   :hover {
     box-shadow: 0 5px 20px rgb(76, 113, 251, 0.8);
