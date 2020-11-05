@@ -8,6 +8,7 @@ export default createGlobalStyle`
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
     list-style-type: none;
+    outline: 0;
   }
   html {
     box-sizing: border-box;
@@ -31,7 +32,6 @@ ol,
 ul {
   margin: 0;
   padding: 0;
-  outline: 0;
   font-weight: normal;
 }
 ol,
