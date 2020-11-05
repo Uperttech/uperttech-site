@@ -8,7 +8,7 @@ import { MdError } from 'react-icons/md'
 import { ActionButton } from '~/components/ActionButton'
 import * as S from '~/styles/pages/Budget'
 import { useApp } from '~/providers/AppProvider'
-import { Input } from '~/components/Form'
+import { Input, TextArea } from '~/components/Form'
 
 const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
@@ -94,12 +94,12 @@ const Budget: React.FC = () => {
               <h2>Sobre você: </h2>
             </legend>
             <S.InputGroup>
-              <input
+              <Input
                 type="text"
                 placeholder="Seu nome"
                 onChange={changeDataForm('name')}
               />
-              <input
+              <Input
                 type="email"
                 placeholder="Seu email"
                 onChange={changeDataForm('email')}
@@ -114,7 +114,7 @@ const Budget: React.FC = () => {
                 type="tel"
                 onChange={changeDataForm('phone')}
               />
-              <input
+              <Input
                 type="text"
                 placeholder="Nome da empresa ou projeto"
                 onChange={changeDataForm('company')}
@@ -128,12 +128,12 @@ const Budget: React.FC = () => {
             </legend>
 
             <S.TextAreaGroup>
-              <textarea
+              <TextArea
                 rows={5}
                 placeholder="Faça uma descrição da sua ideia"
                 onChange={changeDataForm('description')}
               />
-              <textarea
+              <TextArea
                 rows={5}
                 placeholder="Quais são suas referências (Opcional)"
                 onChange={changeDataForm('references')}

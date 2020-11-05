@@ -61,14 +61,15 @@ export const WrapperSectionForm = styled.div`
     }
   }
 `
-export const InputGroup = styled.div`
+export const InputGroup = styled.aside`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 
   > input {
-    flex: 1;
+    width: 100%;
+    max-width: 545px;
     padding: 10px 20px;
     border: 1px solid #b4b4b4;
     color: #000;
@@ -78,47 +79,16 @@ export const InputGroup = styled.div`
     ::placeholder {
       color: #b4b4b4;
     }
-
-    & + input {
-      margin-left: 25px;
-    }
   }
-
-  & + div {
+  & + aside {
     margin-top: 20px;
   }
 `
-export const TextAreaGroup = styled.div`
+export const TextAreaGroup = styled.aside`
   width: 100%;
 
-  > textArea {
-    width: 100%;
-    resize: none;
-    padding: 5px;
-    font-size: 18px;
-    border: 1px solid #b4b4b4;
-    color: #000;
-    border-radius: 4px;
-
-    ::placeholder {
-      color: #b4b4b4;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background-color: #112b7d;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-track-piece {
-      background: #ddd;
-      border-radius: 4px;
-    }
-
-    & + textArea {
-      margin-top: 20px;
-    }
+  > div + div {
+    margin-top: 20px;
   }
 `
 
