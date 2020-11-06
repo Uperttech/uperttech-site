@@ -1,12 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import * as S from './styles'
 import Link from 'next/link'
+import { FiMenu, FiX } from 'react-icons/fi'
 import { useRouter } from 'next/router'
+import NavbarMobile from './NavbarMobile'
 
 const Header: React.FC = () => {
   const { pathname } = useRouter()
   const [toggleBackgroundHeader, setToggleBackgroundHeader] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
+  const handleToggleVisibleHeader = () => {
+    setIsVisible(prevState => !prevState)
+  }
+
+  const handleSelectOptionNavBar = useCallback(() => {
+    setIsVisible(false)
+  }, [])
   useEffect(() => {
     if (pathname === '/orcamento') {
       const scrollListener = () => {
@@ -22,7 +32,7 @@ const Header: React.FC = () => {
       }
     }
     const scrollListener = () => {
-      if (window.scrollY > 300) {
+      if (window.scrollY > 50) {
         setToggleBackgroundHeader(true)
       } else {
         setToggleBackgroundHeader(false)
@@ -36,6 +46,9 @@ const Header: React.FC = () => {
 
   return (
     <>
+      {isVisible && (
+        <NavbarMobile handleSelectOptionNavBar={handleSelectOptionNavBar} />
+      )}
       <S.Container toggleBackground={toggleBackgroundHeader}>
         <Link href="#" passHref>
           <S.Logo
@@ -57,6 +70,16 @@ const Header: React.FC = () => {
             <S.NavigateToProducts>Soluções</S.NavigateToProducts>
           </Link>
         </S.Navigation>
+        <S.ButtonMenu onClick={handleToggleVisibleHeader}>
+          {isVisible ? (
+            <FiX
+              size={30}
+              color={toggleBackgroundHeader ? '#4C71FB' : '#FFF'}
+            />
+          ) : (
+              <FiMenu size={30} color="#4C71FB" />
+            )}
+        </S.ButtonMenu>
       </S.Container>
     </>
   )

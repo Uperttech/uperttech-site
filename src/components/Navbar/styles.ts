@@ -45,6 +45,10 @@ export const Navigation = styled.nav`
       margin-left: 30px;
     }
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 export const NavigateToProducts = styled.a`
   background: #4c71fb;
@@ -57,5 +61,17 @@ export const NavigateToProducts = styled.a`
 
   :hover {
     box-shadow: 0 5px 20px rgb(76, 113, 251, 0.8);
+  }
+`
+
+export const ButtonMenu = styled.button`
+  display: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    display: unset;
   }
 `
