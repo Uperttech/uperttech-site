@@ -24,6 +24,14 @@ export const Container = styled.div<{ isFocused: boolean }>`
     color: #000;
     ::placeholder {
       color: #b4b4b4;
+      font-size: 14px;
     }
+  }
+
+  @media (max-width: 768px) {
+    :not(:nth-child(1)) {
+      margin-top: 20px;
+    }
+    max-width: 100%;
   }
 `

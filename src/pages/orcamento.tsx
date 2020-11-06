@@ -78,7 +78,7 @@ const Budget: React.FC = () => {
   return (
     <S.Container>
       <Navbar />
-      <S.Background src="/images/background.svg" unsized />
+      <S.Background src="/images/background.svg" />
 
       <S.MainContent>
         <S.WrapperMainContent>
@@ -153,6 +153,7 @@ const Budget: React.FC = () => {
                 placeholder="Estimativa de prazo?"
                 onChange={setDeadlineValue}
                 defaultValue={deadlineValue}
+                styles={S.StylesSelect}
               />
               <Select
                 isSearchable={false}
@@ -160,6 +161,7 @@ const Budget: React.FC = () => {
                 placeholder="Estimativa de orçamento?"
                 onChange={setBudgetValue}
                 defaultValue={budgetValue}
+                styles={S.StylesSelect}
               />
             </S.SelectGroup>
             <Select
@@ -168,6 +170,7 @@ const Budget: React.FC = () => {
               placeholder="Como conheceu a Uperttech?"
               onChange={setLeadFromValue}
               defaultValue={leadFromValue}
+              styles={S.StylesSelect}
             />
           </fieldset>
           <S.WrapperRecaptchaAndButton>

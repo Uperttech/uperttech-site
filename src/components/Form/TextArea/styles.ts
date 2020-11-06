@@ -26,6 +26,7 @@ export const Container = styled.div<{ isFocused: boolean }>`
 
     ::placeholder {
       color: #b4b4b4;
+      font-size: 14px;
     }
 
     ::-webkit-scrollbar {
