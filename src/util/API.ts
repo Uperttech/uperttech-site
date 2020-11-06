@@ -11,11 +11,7 @@ export interface Budget {
   grecaptchaResponse: string
 }
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
-const API_URL = isDevelopment
-  ? process.env.NEXT_PUBLIC_API_URL
-  : process.env.NEXT_PUBLIC_API_URL_PRODUCTION
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const API = {
   URL: `http://${API_URL}/v1`,
