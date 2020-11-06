@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import InputPhone from 'react-number-format'
-import Select from 'react-select'
+import RSelect from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
 import { MdError } from 'react-icons/md'
@@ -19,51 +19,64 @@ type SelectData = {
   label: string
 }
 
+type DataForm = {
+  name?: string
+  email?: string
+  phone?: string
+  company?: string
+  description?: string
+  references?: string
+  deadlineValue?: SelectData
+  budgetValue?: SelectData
+  leadFromValue?: SelectData
+}
+
 const Budget: React.FC = () => {
   const { error: authError, loading, createBudget } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
 
   const [recaptchaResponse, setRecaptchaResponse] = useState<
     string | undefined
-  >('')
+  >()
 
-  const [deadlineValue, setDeadlineValue] = useState<SelectData>(null)
-  const [budgetValue, setBudgetValue] = useState<SelectData>(null)
-  const [leadFromValue, setLeadFromValue] = useState<SelectData>(null)
-
-  const [dataForm, setDataForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    description: '',
-    references: ''
-  })
+  const [dataForm, setDataForm] = useState<DataForm>({})
 
   const changeDataForm = (key: keyof typeof dataForm) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setDataForm({ ...dataForm, [key]: e.target.value })
 
+  const changeSelectDataForm = (
+    key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
+  ) => (value: DataForm[typeof key]) =>
+    setDataForm({ ...dataForm, [key]: value })
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { name, email, company, phone, description } = dataForm
+    const {
+      name,
+      email,
+      company,
+      phone,
+      description,
+      deadlineValue,
+      budgetValue,
+      leadFromValue,
+      references
+    } = dataForm
 
-    if (
-      !name ||
-      !email ||
-      !company ||
-      !description ||
-      !phone ||
-      !deadlineValue ||
-      !budgetValue ||
-      !leadFromValue
-    ) {
+    if (Object.values(dataForm).find(v => !!v)) {
+      window.scrollTo(0, 0)
       return setError('Preencha todos os campos')
     }
 
     await createBudget({
-      ...dataForm,
+      name,
+      email,
+      company,
+      phone,
+      description,
+      references,
       deadline: deadlineValue?.value,
       budgetValue: budgetValue?.value,
       leadFrom: leadFromValue?.value,
@@ -83,7 +96,6 @@ const Budget: React.FC = () => {
       <SEO title="Orçamento" />
       <Navbar />
       <S.Background src="/images/background.svg" />
-
       <S.MainContent>
         <S.WrapperMainContent>
           <h1>Faça seu orçamento </h1>
@@ -99,11 +111,13 @@ const Budget: React.FC = () => {
             </legend>
             <S.InputGroup>
               <Input
+                required
                 type="text"
                 placeholder="Seu nome"
                 onChange={changeDataForm('name')}
               />
               <Input
+                required
                 type="email"
                 placeholder="Seu email"
                 onChange={changeDataForm('email')}
@@ -112,6 +126,7 @@ const Budget: React.FC = () => {
 
             <S.InputGroup>
               <InputPhone
+                required
                 placeholder="Telefone"
                 format="(##) # ####-####"
                 mask="_"
@@ -119,6 +134,7 @@ const Budget: React.FC = () => {
                 onChange={changeDataForm('phone')}
               />
               <Input
+                required
                 type="text"
                 placeholder="Nome da empresa ou projeto"
                 onChange={changeDataForm('company')}
@@ -133,11 +149,13 @@ const Budget: React.FC = () => {
 
             <S.TextAreaGroup>
               <TextArea
+                required
                 rows={5}
                 placeholder="Faça uma descrição da sua ideia"
                 onChange={changeDataForm('description')}
               />
               <TextArea
+                required
                 rows={5}
                 placeholder="Quais são suas referências (Opcional)"
                 onChange={changeDataForm('references')}
@@ -152,38 +170,34 @@ const Budget: React.FC = () => {
 
             <S.SelectGroup>
               <Select
-                isSearchable={false}
                 options={Options.Deadline}
                 placeholder="Estimativa de prazo?"
-                onChange={setDeadlineValue}
-                defaultValue={deadlineValue}
-                styles={S.StylesSelect}
+                onChange={changeSelectDataForm('deadlineValue')}
+                defaultValue={dataForm.deadlineValue}
               />
               <Select
-                isSearchable={false}
                 options={Options.BudgetValue}
                 placeholder="Estimativa de orçamento?"
-                onChange={setBudgetValue}
-                defaultValue={budgetValue}
-                styles={S.StylesSelect}
+                onChange={changeSelectDataForm('budgetValue')}
+                defaultValue={dataForm.budgetValue}
               />
             </S.SelectGroup>
             <Select
-              isSearchable={false}
               options={Options.LeadFrom}
               placeholder="Como conheceu a Uperttech?"
-              onChange={setLeadFromValue}
-              defaultValue={leadFromValue}
-              styles={S.StylesSelect}
+              onChange={changeSelectDataForm('leadFromValue')}
+              defaultValue={dataForm.leadFromValue}
             />
           </fieldset>
           <S.WrapperRecaptchaAndButton>
-            <ReCAPTCHA
-              sitekey={API_RECAPTCHA_KEY as string}
-              onChange={(value: string | null) =>
-                value && setRecaptchaResponse(value)
-              }
-            />
+            {API_RECAPTCHA_KEY && (
+              <ReCAPTCHA
+                sitekey={API_RECAPTCHA_KEY}
+                onChange={(value: string | null) =>
+                  value && setRecaptchaResponse(value)
+                }
+              />
+            )}
             <ActionButton
               text="Enviar"
               primary
@@ -198,6 +212,10 @@ const Budget: React.FC = () => {
 }
 
 export default Budget
+
+const Select = props => (
+  <RSelect styles={S.StylesSelect} isSearchable={false} {...props} />
+)
 
 const ErrorDialog: React.FC<{ message: string }> = ({ message }) => {
   return (

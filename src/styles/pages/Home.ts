@@ -78,6 +78,7 @@ export const ArtImageBackground = styled.img`
   }
 
   @media (max-width: 440px) {
+    margin-bottom: 0;
     display: none;
   }
 `
@@ -107,15 +108,13 @@ export const NavigateToBudget = styled.a`
 export const About = styled.section`
   width: 100%;
   height: 100%;
-  padding: 0 30px;
 
-  @media (max-width: 440px) {
-    margin-top: 100px;
-  }
+  padding: 100px 80px 0 80px;
+  margin-top: -100px;
 `
 export const WrapperAbout = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 800px;
   margin: 30px auto;
   /* padding: 0 30px; */
 `
@@ -191,6 +190,9 @@ export const Services = styled.section`
   width: 100%;
   height: 100%;
   padding: 0 30px;
+
+  padding: 100px 30px 0 30px;
+  margin-top: -100px;
 `
 
 export const WrapperServices = styled.div`

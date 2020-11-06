@@ -18,6 +18,7 @@ const Header: React.FC = () => {
   const handleSelectOptionNavBar = useCallback(() => {
     setIsVisible(false)
   }, [])
+
   useEffect(() => {
     if (pathname === '/orcamento') {
       const scrollListener = () => {
@@ -34,10 +35,10 @@ const Header: React.FC = () => {
     }
     const scrollListener = () => {
       if (window.scrollY > 50) {
-        setToggleBackgroundHeader(true)
-      } else {
-        setToggleBackgroundHeader(false)
+        return setToggleBackgroundHeader(true)
       }
+
+      return setToggleBackgroundHeader(false)
     }
     window.addEventListener('scroll', scrollListener)
     return () => {
@@ -51,7 +52,7 @@ const Header: React.FC = () => {
         <NavbarMobile handleSelectOptionNavBar={handleSelectOptionNavBar} />
       )}
       <S.Container toggleBackground={toggleBackgroundHeader}>
-        <Link href="#" passHref>
+        <Link href="/" passHref>
           <S.Logo
             src="/images/logo.png"
             alt="Uperttech"
@@ -67,7 +68,7 @@ const Header: React.FC = () => {
           <Link href="/#servicos">
             <a>Serviços</a>
           </Link>
-          <Link href="/produtos" passHref>
+          <Link href="http://cloud.uperttech.com" passHref>
             <S.NavigateToProducts>Soluções</S.NavigateToProducts>
           </Link>
         </S.Navigation>
