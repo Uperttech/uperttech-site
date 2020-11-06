@@ -10,6 +10,7 @@ import { ActionButton } from '~/components/ActionButton'
 import { useApp } from '~/providers/AppProvider'
 import { Input, TextArea } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
+import SEO from '~/components/SEO'
 
 const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
@@ -79,6 +80,7 @@ const Budget: React.FC = () => {
 
   return (
     <S.Container>
+      <SEO title="Orçamento" />
       <Navbar />
       <S.Background src="/images/background.svg" />
 

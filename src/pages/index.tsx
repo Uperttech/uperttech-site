@@ -3,10 +3,16 @@ import Navbar from '~/components/Navbar'
 import Link from 'next/link'
 
 import * as S from '~/styles/pages/Home'
+import SEO from '~/components/SEO'
 
 const Home: React.FC = () => {
   return (
     <S.Container id="home">
+      <SEO
+        title="Uperttech | Soluções inteligentes para modernizar sua empresa"
+        shouldExcludeTitleSuffix
+        image="images/logo.png"
+      />
       <Navbar />
       <S.Background src="/images/background.svg" />
       <S.WrapperContainer>
