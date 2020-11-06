@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import { useEffect, useState, useCallback } from 'react'
 import * as S from './styles'
 import Link from 'next/link'
@@ -77,8 +78,8 @@ const Header: React.FC = () => {
               color={toggleBackgroundHeader ? '#4C71FB' : '#FFF'}
             />
           ) : (
-              <FiMenu size={30} color="#4C71FB" />
-            )}
+            <FiMenu size={30} color="#4c71fb" />
+          )}
         </S.ButtonMenu>
       </S.Container>
     </>
