@@ -5,10 +5,11 @@ import Select from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
 import { MdError } from 'react-icons/md'
+import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
-import * as S from '~/styles/pages/Budget'
 import { useApp } from '~/providers/AppProvider'
 import { Input, TextArea } from '~/components/Form'
+import * as S from '~/styles/pages/Budget'
 
 const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
@@ -69,6 +70,7 @@ const Budget: React.FC = () => {
     })
 
     setRecaptchaResponse(undefined)
+    toast.success('Orçamento enviado com sucesso!')
   }
 
   useEffect(() => {
