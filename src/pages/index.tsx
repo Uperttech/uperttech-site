@@ -11,10 +11,10 @@ const Home: React.FC = () => {
       <SEO
         title="Uperttech | Soluções inteligentes para modernizar sua empresa"
         shouldExcludeTitleSuffix
-        image="images/logo.png"
+        image="logo.png"
       />
       <Navbar />
-      <S.Background src="/images/background.svg" />
+      <S.Background src="/background.svg" />
       <S.WrapperContainer>
         <S.MainContent>
           <S.WrapperMainContent>
@@ -22,7 +22,7 @@ const Home: React.FC = () => {
             <Link href="/orcamento" passHref>
               <S.NavigateToBudget>Solicitar orçamento</S.NavigateToBudget>
             </Link>
-            <S.ArtImageBackground src="/images/art.svg" alt="background" />
+            <S.ArtImageBackground src="/art.svg" alt="background" />
           </S.WrapperMainContent>
         </S.MainContent>
 

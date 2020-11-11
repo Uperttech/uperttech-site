@@ -95,7 +95,7 @@ const Budget: React.FC = () => {
     <S.Container>
       <SEO title="Orçamento" />
       <Navbar />
-      <S.Background src="/images/background.svg" />
+      <S.Background src="/background.svg" />
       <S.MainContent>
         <S.WrapperMainContent>
           <h1>Faça seu orçamento </h1>

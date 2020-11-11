@@ -248,7 +248,7 @@ export const Description = styled.div`
   width: 100%;
   max-width: 596px;
   background-size: cover;
-  background: url('/images/ellipse.svg') no-repeat center;
+  background: url('/ellipse.svg') no-repeat center;
   display: flex;
   flex-direction: column;
   align-items: center;
