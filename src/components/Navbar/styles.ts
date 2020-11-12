@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Image from 'next/image'
 
 export const Container = styled.div<{ toggleBackground?: boolean }>`
   position: fixed;
@@ -17,8 +16,9 @@ export const Container = styled.div<{ toggleBackground?: boolean }>`
   box-shadow: ${props =>
     props.toggleBackground ? '0 2px 2px rgba(0, 0, 0, 0.08)' : ''};
 `
-export const Logo = styled(Image)`
+export const Logo = styled.img`
   cursor: pointer;
+  width: min(50vw, 220px);
 `
 
 export const Navigation = styled.nav`

@@ -14,6 +14,8 @@ import SEO from '~/components/SEO'
 
 const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 type SelectData = {
   value: string
   label: string
@@ -95,7 +97,7 @@ const Budget: React.FC = () => {
     <S.Container>
       <SEO title="Orçamento" />
       <Navbar />
-      <S.Background src="/background.svg" />
+      <S.Background src={`${BASE_PATH}/background.svg`} />
       <S.MainContent>
         <S.WrapperMainContent>
           <h1>Faça seu orçamento </h1>
