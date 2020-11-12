@@ -5,8 +5,6 @@ import Link from 'next/link'
 import * as S from '~/styles/pages/Home'
 import SEO from '~/components/SEO'
 
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
-
 const Home: React.FC = () => {
   return (
     <S.Container id="home">
@@ -16,7 +14,7 @@ const Home: React.FC = () => {
         image="logo.png"
       />
       <Navbar />
-      <S.Background src={`${BASE_PATH}/background.svg`} />
+      <S.Background src="/background.svg" />
       <S.WrapperContainer>
         <S.MainContent>
           <S.WrapperMainContent>
@@ -24,10 +22,7 @@ const Home: React.FC = () => {
             <Link href="/orcamento" passHref>
               <S.NavigateToBudget>Solicitar orçamento</S.NavigateToBudget>
             </Link>
-            <S.ArtImageBackground
-              src={`${BASE_PATH}/art.svg`}
-              alt="background"
-            />
+            <S.ArtImageBackground src="/art.svg" alt="background" />
           </S.WrapperMainContent>
         </S.MainContent>
 

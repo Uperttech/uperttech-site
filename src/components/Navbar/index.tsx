@@ -6,8 +6,6 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import NavbarMobile from './NavbarMobile'
 
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
-
 const Header: React.FC = () => {
   const { pathname } = useRouter()
   const [toggleBackgroundHeader, setToggleBackgroundHeader] = useState(false)
@@ -55,7 +53,7 @@ const Header: React.FC = () => {
       )}
       <S.Container toggleBackground={toggleBackgroundHeader}>
         <Link href="/" passHref>
-          <S.Logo src={BASE_PATH + '/logo.png'} alt="Uperttech" />
+          <S.Logo src="/logo.png" alt="Uperttech" />
         </Link>
         <S.Navigation>
           <Link href="/#quemsomos">
