@@ -6,7 +6,7 @@
     "dev": "next dev -p 3001",
     "build": "next build && next export -o build",
     "start": "next start",
-    "deploy": "rm -rf node_modules/.cache && yarn build && touch build/.nojekyll && git add build/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix build origin gh-pages"
+    "deploy": "rm -rf node_modules/.cache && yarn build && touch build/.nojekyll && git add -f build/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix build origin gh-pages"
   },
   "dependencies": {
     "next": "10.0.0",
