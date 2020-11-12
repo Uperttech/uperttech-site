@@ -245,11 +245,13 @@ export const DropdownItem = styled.div`
 `
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
+const backgroundUrl = `${BASE_PATH}/ellipse.svg`
+
 export const Description = styled.div`
   width: 100%;
   max-width: 596px;
   background-size: cover;
-  background: url(${BASE_PATH} + '/ellipse.svg') no-repeat center;
+  background: url(${backgroundUrl}) no-repeat center;
   display: flex;
   flex-direction: column;
   align-items: center;
