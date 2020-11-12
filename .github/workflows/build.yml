@@ -30,15 +30,8 @@ jobs:
           name: build
           path: build/
 
-      - name: Commit changes
+      - name: Deploy changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add build/
-          git commit -m "build: Building files"
-        continue-on-error: true
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          yarn deploy
