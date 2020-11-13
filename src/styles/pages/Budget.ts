@@ -157,16 +157,3 @@ export const WrapperRecaptchaAndButton = styled.div`
     margin-top: 25px;
   }
 `
-
-export const StyledErrorDialog = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #fae5e5;
-  color: red;
-  font-size: 12px;
-  margin-bottom: 20px;
-  svg {
-    margin-right: 5px;
-  }
-`
