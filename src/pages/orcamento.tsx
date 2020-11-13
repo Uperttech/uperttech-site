@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import InputPhone from 'react-number-format'
-import RSelect from 'react-select'
+import RSelect, { OptionTypeBase, Props as SelectProps } from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
 import { toast } from 'react-toastify'
@@ -213,6 +213,6 @@ const Budget: React.FC = () => {
 
 export default Budget
 
-const Select = props => (
+const Select = (props: SelectProps<OptionTypeBase>) => (
   <RSelect styles={S.StylesSelect} isSearchable={false} {...props} />
 )
