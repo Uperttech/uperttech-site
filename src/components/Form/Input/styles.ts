@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 export const Container = styled.div<{ isFocused: boolean }>`
   width: 100%;
-  max-width: 545px;
+  /* max-width: 545px;   */
   padding: 10px 20px;
   background: #fff;
   border: 1px solid #b4b4b4;

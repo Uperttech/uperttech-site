@@ -1,12 +1,12 @@
 import { useState, FormEvent, useEffect } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import InputPhone from 'react-number-format'
-import RSelect from 'react-select'
+import RSelect, { OptionTypeBase, Props as SelectProps } from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
-import { MdError } from 'react-icons/md'
 import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
+import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
 import { Input, TextArea } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
@@ -213,15 +213,6 @@ const Budget: React.FC = () => {
 
 export default Budget
 
-const Select = props => (
+const Select = (props: SelectProps<OptionTypeBase>) => (
   <RSelect styles={S.StylesSelect} isSearchable={false} {...props} />
 )
-
-const ErrorDialog: React.FC<{ message: string }> = ({ message }) => {
-  return (
-    <S.StyledErrorDialog>
-      <MdError size={20} />
-      {message}
-    </S.StyledErrorDialog>
-  )
-}
