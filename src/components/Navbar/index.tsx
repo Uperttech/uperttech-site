@@ -65,7 +65,7 @@ const Header: React.FC = () => {
           <Link href="/#contato">
             <a>Contato</a>
           </Link>
-          <Link href="http://cloud.uperttech.com" passHref>
+          <Link href="https://cloud.uperttech.com" passHref>
             <S.NavigateToProducts>Soluções</S.NavigateToProducts>
           </Link>
         </S.Navigation>
