@@ -22,16 +22,20 @@ jobs:
         run: yarn
 
       - name: Run build
-        run: yarn build
-
-      - name: Create build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: build/
+        env: 
+          NEXT_PUBLIC_API_KEY_RECAPTCHA: ${{ secrets.NEXT_PUBLIC_API_KEY_RECAPTCHA }}
+        run: |
+          echo "NEXT_PUBLIC_API_KEY_RECAPTCHA=$NEXT_PUBLIC_API_KEY_RECAPTCHA" >> .env.local
+          rm -rf node_modules/.cache
+          yarn build
 
       - name: Deploy changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          yarn deploy
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git clone https://github.com/uperttech/uperttech-site --branch gh-pages --single-branch build-repo
+          cp -r build/* build-repo
+          cd build-repo
+          git add .
+          git commit -m "cd: Deploy Next.js to gh-pages"
+          git push origin gh-pages
