@@ -30,12 +30,16 @@ jobs:
           yarn build
 
       - name: Deploy changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
         run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           git clone https://github.com/uperttech/uperttech-site --branch gh-pages --single-branch build-repo
           cp -r build/* build-repo
           cd build-repo
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$REPOSITORY
           git add .
           git commit -m "cd: Deploy Next.js to gh-pages"
-          git push origin gh-pages
+          git push
