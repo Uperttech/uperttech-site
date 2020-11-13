@@ -11,6 +11,12 @@ export interface Budget {
   grecaptchaResponse: string
 }
 
+export interface ContactData {
+  name: string
+  email: string
+  message: string
+}
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const API = {
@@ -36,5 +42,13 @@ export const API = {
     const data = await response.json()
     if (!response.ok) throw new Error(data.message || response.statusText)
     return data as Budget
+  },
+
+  sendContact: async (contactData: {
+    name: string
+    email: string
+    message: string
+  }): Promise<void> => {
+    // Rota para comunicação com API
   }
 }

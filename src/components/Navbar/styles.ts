@@ -34,7 +34,7 @@ export const Navigation = styled.nav`
     font-size: 18px;
     font-weight: 500;
     transition: 0.2s ease;
-    :not(:nth-child(3)) {
+    :not(:nth-child(4)) {
       opacity: 0.5;
     }
 

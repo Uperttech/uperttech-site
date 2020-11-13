@@ -109,7 +109,7 @@ export const About = styled.section`
   width: 100%;
   height: 100%;
 
-  padding: 100px 80px 0 80px;
+  padding: 100px 30px 0 30px;
   margin-top: -100px;
 `
 export const WrapperAbout = styled.div`
@@ -273,4 +273,57 @@ export const Description = styled.div`
   @media (max-width: 1024px) {
     background: none;
   }
+`
+
+export const Contact = styled.section`
+  margin-top: 70px;
+  width: 100%;
+  height: 100%;
+  padding: 0 30px;
+`
+
+export const WrapperContact = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+
+  > h2 {
+    color: #112b7d;
+    font-weight: bold;
+    font-size: min(7vw, 36px);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+`
+
+export const InputGroup = styled.aside`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+
+  > div + div {
+    margin-left: 20px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    > input {
+      margin-right: 0;
+      max-width: 100%;
+    }
+
+    > div + div {
+      margin-left: 0px;
+    }
+  }
+`
+export const WrapperButton = styled.div`
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `

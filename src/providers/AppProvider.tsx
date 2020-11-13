@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useReducer } from 'react'
-import { API, Budget } from '../util/API'
+import { API, Budget, ContactData } from '../util/API'
 
 interface AppProviderState {
   error?: string
@@ -9,10 +9,12 @@ interface AppProviderState {
 
 interface AppContextData extends AppProviderState {
   createBudget: (budgetData: Budget) => Promise<void>
+  sendContact: (contactData: ContactData) => Promise<void>
 }
 
 const AppContext = createContext<AppContextData>({
-  createBudget: async () => {}
+  createBudget: async () => {},
+  sendContact: async () => {}
 })
 
 type Provider<T> = React.FC<{ children: JSX.Element[] | JSX.Element }> & {
@@ -21,10 +23,9 @@ type Provider<T> = React.FC<{ children: JSX.Element[] | JSX.Element }> & {
 
 enum AppActionTypes {
   EmptyRecaptcha,
-  CreateBudgetStart,
-  SigninSuccess,
-  CreateBudgetSuccess,
-  CreateBudgetError
+  Start,
+  Success,
+  Error
 }
 
 const authReducer = (
@@ -34,15 +35,15 @@ const authReducer = (
   switch (action.type) {
     case AppActionTypes.EmptyRecaptcha:
       return { ...state, error: 'Preencha o reCAPTCHA' }
-    case AppActionTypes.CreateBudgetStart:
+    case AppActionTypes.Start:
       return { ...state, loading: true }
-    case AppActionTypes.CreateBudgetSuccess:
+    case AppActionTypes.Success:
       return {
         ...state,
         loading: false,
         error: undefined
       }
-    case AppActionTypes.CreateBudgetError:
+    case AppActionTypes.Error:
       return { ...state, loading: false, error: action.payload?.error }
     default:
       throw new Error('Unknown action.type')
@@ -61,14 +62,29 @@ const AppProvider: Provider<AppContextData> = props => {
         return dispatch({ type: AppActionTypes.EmptyRecaptcha })
       }
 
-      dispatch({ type: AppActionTypes.CreateBudgetStart })
+      dispatch({ type: AppActionTypes.Start })
 
       await API.createBudget(budgetData)
 
-      dispatch({ type: AppActionTypes.CreateBudgetSuccess })
+      dispatch({ type: AppActionTypes.Success })
     } catch (err) {
       dispatch({
-        type: AppActionTypes.CreateBudgetError,
+        type: AppActionTypes.Error,
+        payload: {
+          error: err.message
+        }
+      })
+    }
+  }
+
+  const sendContact = async (contactData: ContactData) => {
+    try {
+      dispatch({ type: AppActionTypes.Start })
+      await API.sendContact(contactData)
+      dispatch({ type: AppActionTypes.Success })
+    } catch (err) {
+      dispatch({
+        type: AppActionTypes.Error,
         payload: {
           error: err.message
         }
@@ -79,7 +95,10 @@ const AppProvider: Provider<AppContextData> = props => {
   const { error, loading } = state
 
   return (
-    <AppContext.Provider value={{ createBudget, error, loading }} {...props} />
+    <AppContext.Provider
+      value={{ sendContact, createBudget, error, loading }}
+      {...props}
+    />
   )
 }
 

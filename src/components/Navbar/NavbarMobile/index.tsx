@@ -15,6 +15,9 @@ const NavbarMobile: React.FC<NavBarProps> = ({ handleSelectOptionNavBar }) => {
         <Link href="/#servicos">
           <a onClick={handleSelectOptionNavBar}>Serviços</a>
         </Link>
+        <Link href="/#contato">
+          <a onClick={handleSelectOptionNavBar}>Contato</a>
+        </Link>
         <Link href="/produtos">
           <a onClick={handleSelectOptionNavBar}>Soluções</a>
         </Link>

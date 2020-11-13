@@ -4,8 +4,50 @@ import Link from 'next/link'
 
 import * as S from '~/styles/pages/Home'
 import SEO from '~/components/SEO'
+import { TextArea, Input } from '~/components/Form'
+import { ActionButton } from '~/components/ActionButton'
+import { useState, FormEvent, useEffect } from 'react'
+import { useApp } from '~/providers/AppProvider'
+import { ErrorDialog } from '~/components/ErrorDialog'
+// import { toast } from 'react-toastify'
+
+type DataForm = {
+  name?: string
+  email?: string
+  message?: string
+}
 
 const Home: React.FC = () => {
+  const [dataForm, setDataForm] = useState<DataForm>({})
+  const { error: appError, loading, sendContact } = useApp()
+  const [error, setError] = useState<string | undefined>(appError)
+
+  const changeDataForm = (key: keyof typeof dataForm) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setDataForm({ ...dataForm, [key]: e.target.value })
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const { name, email, message } = dataForm
+
+    if (!Object.values(dataForm).find(v => !!v)) {
+      return setError('Preencha todos os campos')
+    }
+
+    await sendContact({
+      name,
+      email,
+      message
+    })
+
+    // toast.success('Mensagem enviada com sucesso!')
+  }
+
+  useEffect(() => {
+    setError(appError)
+  }, [appError])
+
   return (
     <S.Container id="home">
       <SEO
@@ -81,6 +123,45 @@ const Home: React.FC = () => {
             </S.Description>
           </S.WrapperServices>
         </S.Services>
+
+        <S.Contact id="contato">
+          <S.WrapperContact>
+            <h2>Entre em contato conosco</h2>
+
+            {error && <ErrorDialog message={error} />}
+            <form onSubmit={handleSubmit}>
+              <S.InputGroup>
+                <Input
+                  required
+                  type="text"
+                  placeholder="Seu nome"
+                  onChange={changeDataForm('name')}
+                />
+                <Input
+                  required
+                  type="email"
+                  placeholder="Seu email"
+                  onChange={changeDataForm('email')}
+                />
+              </S.InputGroup>
+              <TextArea
+                required
+                rows={5}
+                placeholder="Sua mensagem"
+                onChange={changeDataForm('message')}
+              />
+
+              <S.WrapperButton>
+                <ActionButton
+                  text="Enviar"
+                  primary
+                  type="submit"
+                  loading={loading}
+                />
+              </S.WrapperButton>
+            </form>
+          </S.WrapperContact>
+        </S.Contact>
       </S.WrapperContainer>
     </S.Container>
   )
