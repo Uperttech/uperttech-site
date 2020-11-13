@@ -4,9 +4,9 @@ import InputPhone from 'react-number-format'
 import RSelect from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
-import { MdError } from 'react-icons/md'
 import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
+import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
 import { Input, TextArea } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
@@ -216,12 +216,3 @@ export default Budget
 const Select = props => (
   <RSelect styles={S.StylesSelect} isSearchable={false} {...props} />
 )
-
-const ErrorDialog: React.FC<{ message: string }> = ({ message }) => {
-  return (
-    <S.StyledErrorDialog>
-      <MdError size={20} />
-      {message}
-    </S.StyledErrorDialog>
-  )
-}
