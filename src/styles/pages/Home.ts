@@ -141,6 +141,12 @@ export const HeaderAbout = styled.div`
   @media (max-width: 1300px) {
     margin-top: 0;
   }
+
+  @media (max-width: 768px) {
+    > p {
+      font-size: 16px;
+    }
+  }
 `
 
 export const Grid = styled.ul`
@@ -181,6 +187,10 @@ export const GridItem = styled.li`
 
     & + li {
       margin-top: 20px;
+    }
+
+    > p {
+      font-size: 16px;
     }
   }
 `
@@ -262,9 +272,9 @@ export const Description = styled.div`
 
   > p {
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     margin-top: 30px;
-
+    font-size: 18px;
     line-height: 24px;
     text-align: center;
     color: #8a8a8a;
@@ -272,6 +282,12 @@ export const Description = styled.div`
 
   @media (max-width: 1024px) {
     background: none;
+  }
+
+  @media (max-width: 768px) {
+    > p {
+      font-size: 16px;
+    }
   }
 `
 

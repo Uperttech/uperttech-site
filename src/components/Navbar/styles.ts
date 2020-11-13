@@ -46,7 +46,7 @@ export const Navigation = styled.nav`
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     display: none;
   }
 `
@@ -70,7 +70,7 @@ export const ButtonMenu = styled.button`
   cursor: pointer;
   z-index: 5;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     display: unset;
   }
 `
