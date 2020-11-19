@@ -5,7 +5,7 @@ export const Container = styled.div<{ isFocused: boolean }>`
   /* max-width: 545px;   */
   padding: 10px 20px;
   background: #fff;
-  border: 1px solid #b4b4b4;
+  border: 0;
   color: #000;
   border-radius: 4px;
   position: relative;
