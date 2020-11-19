@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 export const Container = styled.div<{ isFocused: boolean }>`
   width: 100%;
   border-radius: 4px;
-  border: 1px solid #b4b4b4;
+  border: 0;
   padding: 5px;
   background: #fff;
   position: relative;

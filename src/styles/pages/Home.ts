@@ -209,9 +209,11 @@ export const WrapperServices = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 30px auto;
+  min-height: 310px;
   /* padding: 0 30px; */
 
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
 
   @media (max-width: 1024px) {
@@ -254,6 +256,7 @@ export const DropdownItem = styled.div`
   }
 `
 export const Description = styled.div`
+  height: 310px;
   width: 100%;
   max-width: 596px;
   background-size: cover;
@@ -308,8 +311,14 @@ export const WrapperContact = styled.div`
     font-weight: bold;
     font-size: min(7vw, 36px);
     text-align: center;
-    margin-bottom: 20px;
   }
+`
+
+export const SubtitleContact = styled.h4`
+  text-align: center;
+  font-size: 18px;
+  color: #8a8a8a;
+  margin: 20px 0px 20px 0px;
 `
 
 export const InputGroup = styled.aside`

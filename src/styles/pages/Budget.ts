@@ -34,6 +34,13 @@ export const WrapperMainContent = styled.div`
     font-weight: 700;
     margin-top: 150px;
   }
+
+  > h4 {
+    color: #8a8a8a;
+    font-size: min(7vw, 20px);
+    text-align: center;
+    margin-top: 20px;
+  }
 `
 
 export const SectionForm = styled.form`
@@ -75,7 +82,7 @@ export const InputGroup = styled.aside`
     width: 100%;
     max-width: 545px;
     padding: 10px 20px;
-    border: 1px solid #b4b4b4;
+    border: 0;
     color: #000;
     border-radius: 4px;
     font-size: 18px;
@@ -120,6 +127,13 @@ export const StylesSelect = {
       ...defaultStyles,
       color: '#b4b4b4',
       fontSize: '14px'
+    }
+  },
+  control: (defaultStyles: CSSProperties) => {
+    return {
+      ...defaultStyles,
+      border: 0,
+      padding: 5
     }
   }
 }

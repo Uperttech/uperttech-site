@@ -32,6 +32,7 @@
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "no-useless-return": "off"
+    "no-useless-return": "off",
+    "multiline-ternary": "off"
   }
 }

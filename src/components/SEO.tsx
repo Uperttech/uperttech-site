@@ -26,6 +26,8 @@ export default function SEO({
       {description && <meta name="description" content={description} />}
       {pageImage && <meta name="image" content={pageImage} />}
       {!shouldIndexPage && <meta name="robots" content="noindex/nofollow" />}
+      <link rel="shortcut icon" href="/logo-uperttech.svg" />
+      <link rel="apple-touch-icon" href="/logo-uperttech.svg" />
 
       <meta httpEquiv="x-ua-compatible" content="IE=edge,chrome=1" />
       <meta name="MobileOptimized" content="320" />
@@ -43,7 +45,7 @@ export default function SEO({
       <meta property="og:image" content={pageImage} />
       <meta property="og:image:secure_url" content={pageImage} />
       <meta property="og:image:alt" content="Thumbnail" />
-      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:type" content="image/svg" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
     </Head>

@@ -1,4 +1,3 @@
-import { MdKeyboardArrowDown } from 'react-icons/md'
 import Navbar from '~/components/Navbar'
 import Link from 'next/link'
 
@@ -9,6 +8,7 @@ import { ActionButton } from '~/components/ActionButton'
 import { useState, FormEvent, useEffect } from 'react'
 import { useApp } from '~/providers/AppProvider'
 import { ErrorDialog } from '~/components/ErrorDialog'
+import DropdownItem from '~/components/DropdownItem'
 // import { toast } from 'react-toastify'
 
 type DataForm = {
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
       <SEO
         title="Uperttech | Soluções inteligentes para modernizar sua empresa"
         shouldExcludeTitleSuffix
-        image="logo.png"
+        image="logo-uperttech.svg"
       />
       <Navbar />
       <S.Background src="/background.svg" />
@@ -73,10 +73,9 @@ const Home: React.FC = () => {
             <S.HeaderAbout>
               <h3>Quem somos</h3>
               <p>
-                Com o impulso de melhorar continuamente a UPERTTECH foi criada
-                no ano de 2020, tendo como diretriz a entrega de soluções
-                tecnológicas que buscam melhorar e otimizar os processos de
-                nossos clientes.
+                A UPERTTECH foi criada no ano de 2020, tendo como diretriz a
+                entrega de soluções tecnológicas que buscam melhorar e otimizar
+                os processos de nossos clientes.
               </p>
             </S.HeaderAbout>
             <S.Grid>
@@ -105,20 +104,33 @@ const Home: React.FC = () => {
         <S.Services id="servicos">
           <S.WrapperServices>
             <S.DropdownServices>
-              <DropdownItem>Consultoria em Gestão de TI</DropdownItem>
-              <DropdownItem>Mentoria em Organização Digital</DropdownItem>
-              <DropdownItem>
-                Consultoria em desenvolvimento de sistemas
-              </DropdownItem>
-              <DropdownItem>Consultoria em Governança Corporativa</DropdownItem>
-              <DropdownItem>Serviço de apoio administrativo</DropdownItem>
+              <DropdownItem
+                title="Consultoria em Gestão de TI"
+                content="Mapear os processos de sua TI com um diagnóstico de maturidade e elaborar um plano estratégico focando em um negócio que gera resultado."
+              />
+              <DropdownItem
+                title="Mentoria em Organização Digital"
+                content="Posicionamento na internet com desenvolvimento e hospedagem de site com os melhores provedores do mercado com ótima qualidade e segurança."
+              />
+              <DropdownItem
+                title="Consultoria em desenvolvimento de sistemas"
+                content="Consultoria nas melhores práticas de desenvolvimento de sistemas para web, com mentoria em utilização de testes automatizados, integração continua e uso correto de repositórios."
+              />
+              <DropdownItem
+                title="Consultoria em Governança Corporativa"
+                content="Consultoria na elaboração de um mapa estratégico utilizando o balanced scorecard criando indicadores de fácil acompanhamento."
+              />
+              <DropdownItem
+                title="Serviço de apoio administrativo"
+                content="Escritório virtual, mentoria em levantamento de estoque e levantamento patrimonial, e outros serviços que facilitem o operacional alcançar o objetivo estratégico."
+              />
             </S.DropdownServices>
             <S.Description>
               <h2>Nossos serviços</h2>
               <p>
-                São serviço focado em diagnósticos e processos com a finalidade
-                de suprir necessidades específicas do cliente por meio de
-                recomendações de ações e apontamento de soluções.
+                São serviços focados em diagnósticos e processos com a
+                finalidade de suprir necessidades específicas do cliente por
+                meio de recomendações de ações e apontamento de soluções.
               </p>
             </S.Description>
           </S.WrapperServices>
@@ -127,6 +139,11 @@ const Home: React.FC = () => {
         <S.Contact id="contato">
           <S.WrapperContact>
             <h2>Entre em contato conosco</h2>
+
+            <S.SubtitleContact>
+              Seu contato é muito importante para nós. Qualquer crítica, dúvida
+              ou elogio fale conosco.
+            </S.SubtitleContact>
 
             {error && <ErrorDialog message={error} />}
             <form onSubmit={handleSubmit}>
@@ -166,13 +183,6 @@ const Home: React.FC = () => {
     </S.Container>
   )
 }
-
-const DropdownItem: React.FC = ({ children }) => (
-  <S.DropdownItem>
-    <strong>{children}</strong>
-    <MdKeyboardArrowDown size={20} color="#112B7D" />
-  </S.DropdownItem>
-)
 
 const GridItem: React.FC<{ title: string }> = ({ title, children }) => (
   <S.GridItem>
