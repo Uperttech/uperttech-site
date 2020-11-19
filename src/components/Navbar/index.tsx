@@ -1,4 +1,3 @@
-/* eslint-disable multiline-ternary */
 import { useEffect, useState, useCallback } from 'react'
 import * as S from './styles'
 import Link from 'next/link'
