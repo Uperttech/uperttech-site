@@ -53,7 +53,7 @@ const Home: React.FC = () => {
       <SEO
         title="Uperttech | Soluções inteligentes para modernizar sua empresa"
         shouldExcludeTitleSuffix
-        image="logo-uperttech.svg"
+        image="logo.png"
       />
       <Navbar />
       <S.Background src="/background.svg" />

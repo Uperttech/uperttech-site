@@ -45,7 +45,7 @@ export default function SEO({
       <meta property="og:image" content={pageImage} />
       <meta property="og:image:secure_url" content={pageImage} />
       <meta property="og:image:alt" content="Thumbnail" />
-      <meta property="og:image:type" content="image/svg" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
     </Head>
