@@ -306,10 +306,11 @@ export const WrapperContact = styled.div`
   max-width: 1200px;
   margin: 30px auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+`
 
+export const WrapperTitleContact = styled.div`
   > h2 {
     color: #112b7d;
     font-weight: bold;
@@ -318,7 +319,6 @@ export const WrapperContact = styled.div`
     margin-bottom: 20px;
   }
 `
-
 export const SubtitleContact = styled.h4`
   text-align: center;
   font-size: 18px;

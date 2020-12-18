@@ -137,9 +137,10 @@ const Home: React.FC = () => {
         </S.Services>
 
         <S.Contact id="contato">
-          <S.WrapperContact>
+          <S.WrapperTitleContact>
             <h2>Entre em contato conosco</h2>
-
+          </S.WrapperTitleContact>
+          <S.WrapperContact>
             {/*
 
             <S.SubtitleContact>
@@ -182,7 +183,7 @@ const Home: React.FC = () => {
             <iframe
               src="https://docs.google.com/forms/d/e/1FAIpQLSddGyufP7tk8O7wcqTpm-qvC-oh-1rByKU9lGYtLbNYh5IWog/viewform?embedded=true"
               width="900"
-              height="900"
+              height="1000"
               frameBorder="0"
             >
               Carregando…
