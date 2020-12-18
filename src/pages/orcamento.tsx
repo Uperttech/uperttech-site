@@ -100,15 +100,15 @@ const Budget: React.FC = () => {
         <S.WrapperMainContent>
           <h1>Faça seu orçamento </h1>
           <h4>
-            Não sabe por onde começar? Encaminhe sua ideia que ajudamos a tornar
-            realidade.
+            {/* Não sabe por onde começar? Encaminhe sua ideia que ajudamos a tornar
+            realidade. */}
           </h4>
         </S.WrapperMainContent>
       </S.MainContent>
 
       <S.SectionForm onSubmit={handleSubmit}>
         <S.WrapperSectionForm>
-          {error && <ErrorDialog message={error} />}
+          {/* {error && <ErrorDialog message={error} />}
           <fieldset>
             <legend>
               <h2>Sobre você: </h2>
@@ -208,7 +208,15 @@ const Budget: React.FC = () => {
               type="submit"
               loading={loading}
             />
-          </S.WrapperRecaptchaAndButton>
+          </S.WrapperRecaptchaAndButton> */}
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLScUGU93JI2qTXQ4Pi2RJ5vkKqXKbG4I0A9viLgfIHZAAe78ww/viewform?embedded=true"
+            width="900"
+            height="1000"
+            frameBorder="0"
+          >
+            Carregando…
+          </iframe>
         </S.WrapperSectionForm>
       </S.SectionForm>
     </S.Container>

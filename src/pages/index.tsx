@@ -140,6 +140,8 @@ const Home: React.FC = () => {
           <S.WrapperContact>
             <h2>Entre em contato conosco</h2>
 
+            {/*
+
             <S.SubtitleContact>
               Seu contato é muito importante para nós. Qualquer crítica, dúvida
               ou elogio fale conosco.
@@ -176,7 +178,15 @@ const Home: React.FC = () => {
                   loading={loading}
                 />
               </S.WrapperButton>
-            </form>
+            </form> */}
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSddGyufP7tk8O7wcqTpm-qvC-oh-1rByKU9lGYtLbNYh5IWog/viewform?embedded=true"
+              width="900"
+              height="900"
+              frameBorder="0"
+            >
+              Carregando…
+            </iframe>
           </S.WrapperContact>
         </S.Contact>
       </S.WrapperContainer>

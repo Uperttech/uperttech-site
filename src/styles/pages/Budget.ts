@@ -53,6 +53,9 @@ export const WrapperSectionForm = styled.div`
   max-width: 1200px;
   margin: 30px auto;
   padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   > fieldset {
     border: 0;

@@ -305,12 +305,17 @@ export const WrapperContact = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   > h2 {
     color: #112b7d;
     font-weight: bold;
     font-size: min(7vw, 36px);
     text-align: center;
+    margin-bottom: 20px;
   }
 `
 
