@@ -32,7 +32,7 @@ const StyledActionButton = styled.button<ActionButtonProps>`
   border: 0;
   padding: 15px 25px;
   width: 100%;
-  max-width: 420px;
+  /* max-width: 420px; */
   height: 50px;
   text-align: center;
   font-size: 17px;

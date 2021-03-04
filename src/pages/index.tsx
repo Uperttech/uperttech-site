@@ -141,53 +141,45 @@ const Home: React.FC = () => {
             <h2>Entre em contato conosco</h2>
           </S.WrapperTitleContact>
           <S.WrapperContact>
-            {/*
-
             <S.SubtitleContact>
               Seu contato é muito importante para nós. Qualquer crítica, dúvida
               ou elogio fale conosco.
             </S.SubtitleContact>
 
             {error && <ErrorDialog message={error} />}
-            <form onSubmit={handleSubmit}>
+            <form
+              // onSubmit={handleSubmit}
+              method="post"
+              action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGQNmUGUbGXgPQAAqIAbxj6JYeLo0ca8ScL5TO0-XiJBgSPw/formResponse"
+            >
               <S.InputGroup>
                 <Input
                   required
                   type="text"
                   placeholder="Seu nome"
-                  onChange={changeDataForm('name')}
+                  name="entry.1904584939"
+                  // onChange={changeDataForm('name')}
                 />
                 <Input
                   required
                   type="email"
                   placeholder="Seu email"
-                  onChange={changeDataForm('email')}
+                  name="entry.230414312"
+                  // onChange={changeDataForm('email')}
                 />
               </S.InputGroup>
               <TextArea
                 required
                 rows={5}
                 placeholder="Sua mensagem"
-                onChange={changeDataForm('message')}
+                name="entry.246867779"
+                // onChange={changeDataForm('message')}
               />
 
               <S.WrapperButton>
-                <ActionButton
-                  text="Enviar"
-                  primary
-                  type="submit"
-                  loading={loading}
-                />
+                <ActionButton text="Enviar" primary type="submit" />
               </S.WrapperButton>
-            </form> */}
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSddGyufP7tk8O7wcqTpm-qvC-oh-1rByKU9lGYtLbNYh5IWog/viewform?embedded=true"
-              width="900"
-              height="1000"
-              frameBorder="0"
-            >
-              Carregando…
-            </iframe>
+            </form>
           </S.WrapperContact>
         </S.Contact>
       </S.WrapperContainer>
