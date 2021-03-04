@@ -54,6 +54,7 @@ export const WrapperSectionForm = styled.div`
   margin: 30px auto;
   padding: 0 30px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -71,6 +72,13 @@ export const WrapperSectionForm = styled.div`
 
     & + fieldset {
       margin-top: 20px;
+    }
+
+    > h2 {
+      color: #112b7d;
+      font-size: min(4vw, 24px);
+      font-weight: 600;
+      margin-bottom: 5px;
     }
   }
 `
@@ -146,6 +154,10 @@ export const SelectGroup = styled.div`
   align-items: center;
   margin-bottom: 25px;
 
+  .none-display-input {
+    display: none;
+  }
+
   > div {
     width: 100%;
 
@@ -169,6 +181,9 @@ export const WrapperRecaptchaAndButton = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 0 10px;
+  width: 100%;
+  max-width: 420px;
 
   > button {
     margin-top: 25px;

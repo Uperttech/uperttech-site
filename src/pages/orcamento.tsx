@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
-import { Input, TextArea } from '~/components/Form'
+import { Input, TextArea, CheckBox } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
 import SEO from '~/components/SEO'
 
@@ -100,15 +100,19 @@ const Budget: React.FC = () => {
         <S.WrapperMainContent>
           <h1>Faça seu orçamento </h1>
           <h4>
-            {/* Não sabe por onde começar? Encaminhe sua ideia que ajudamos a tornar
-            realidade. */}
+            Não sabe por onde começar? Encaminhe sua ideia que ajudamos a tornar
+            realidade.
           </h4>
         </S.WrapperMainContent>
       </S.MainContent>
 
-      <S.SectionForm onSubmit={handleSubmit}>
+      <S.SectionForm
+        // onSubmit={handleSubmit}
+        method="post"
+        action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSf-Up_irXDJKFfL1b8k3_G9NalEu1TZAonIyjYDEqRrYU-Cow/formResponse"
+      >
         <S.WrapperSectionForm>
-          {/* {error && <ErrorDialog message={error} />}
+          {error && <ErrorDialog message={error} />}
           <fieldset>
             <legend>
               <h2>Sobre você: </h2>
@@ -118,30 +122,34 @@ const Budget: React.FC = () => {
                 required
                 type="text"
                 placeholder="Seu nome"
-                onChange={changeDataForm('name')}
+                name="entry.128360191"
+                // onChange={changeDataForm('name')}
               />
               <Input
                 required
                 type="email"
                 placeholder="Seu email"
-                onChange={changeDataForm('email')}
+                name="entry.6011279"
+                // onChange={changeDataForm('email')}
               />
             </S.InputGroup>
 
             <S.InputGroup>
               <InputPhone
+                name="entry.1501489900"
                 required
                 placeholder="Telefone"
                 format="(##) # ####-####"
                 mask="_"
                 type="tel"
-                onChange={changeDataForm('phone')}
+                // onChange={changeDataForm('phone')}
               />
               <Input
+                name="entry.1858906124"
                 required
                 type="text"
                 placeholder="Nome da empresa ou projeto"
-                onChange={changeDataForm('company')}
+                // onChange={changeDataForm('company')}
               />
             </S.InputGroup>
           </fieldset>
@@ -156,13 +164,14 @@ const Budget: React.FC = () => {
                 required
                 rows={5}
                 placeholder="Faça uma descrição da sua ideia"
-                onChange={changeDataForm('description')}
+                // onChange={changeDataForm('description')}
+                name="entry.1415092291"
               />
               <TextArea
-                required
                 rows={5}
                 placeholder="Quais são suas referências (Opcional)"
-                onChange={changeDataForm('references')}
+                // onChange={changeDataForm('references')}
+                name="entry.914415981"
               />
             </S.TextAreaGroup>
           </fieldset>
@@ -171,8 +180,19 @@ const Budget: React.FC = () => {
             <legend>
               <h2>Mais detalhes:</h2>
             </legend>
-
             <S.SelectGroup>
+              <input
+                type="text"
+                className="none-display-input"
+                name="entry.264284994"
+                value={dataForm.deadlineValue?.label}
+              />
+              <input
+                className="none-display-input"
+                type="text"
+                name="entry.1651142815"
+                value={dataForm.budgetValue?.label}
+              />
               <Select
                 options={Options.Deadline}
                 placeholder="Estimativa de prazo?"
@@ -186,12 +206,30 @@ const Budget: React.FC = () => {
                 defaultValue={dataForm.budgetValue}
               />
             </S.SelectGroup>
-            <Select
+            <h2>Como conheceu a Uperttech?</h2>
+            <CheckBox
+              name="entry.215608498"
+              label="Indicação de amigo"
+              value="Indicação de amigo"
+              defaultValue="Não foi informado"
+            />
+            <CheckBox
+              name="entry.215608498"
+              label="Pesquisa no Google"
+              value="Pesquisa no Google"
+            />
+            <CheckBox name="entry.215608498" label="Evento" value="Evento" />
+            <CheckBox
+              name="entry.215608498"
+              label="Redes sociais (Facebook, Twitter, Linkedin)"
+              value="Redes sociais (Facebook, Twitter, Linkedin)"
+            />
+            {/* <Select
               options={Options.LeadFrom}
               placeholder="Como conheceu a Uperttech?"
               onChange={changeSelectDataForm('leadFromValue')}
               defaultValue={dataForm.leadFromValue}
-            />
+            /> */}
           </fieldset>
           <S.WrapperRecaptchaAndButton>
             {API_RECAPTCHA_KEY && (
@@ -206,17 +244,9 @@ const Budget: React.FC = () => {
               text="Enviar"
               primary
               type="submit"
-              loading={loading}
+              // loading={loading}
             />
-          </S.WrapperRecaptchaAndButton> */}
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLScUGU93JI2qTXQ4Pi2RJ5vkKqXKbG4I0A9viLgfIHZAAe78ww/viewform?embedded=true"
-            width="900"
-            height="1000"
-            frameBorder="0"
-          >
-            Carregando…
-          </iframe>
+          </S.WrapperRecaptchaAndButton>
         </S.WrapperSectionForm>
       </S.SectionForm>
     </S.Container>
