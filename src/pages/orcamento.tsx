@@ -129,25 +129,27 @@ const Budget: React.FC = () => {
                 type="text"
                 className="none-display-input"
                 name="entry.264284994"
-                value={dataForm.deadlineValue?.label}
+                value={dataForm.deadlineValue?.value || ''}
+                readOnly
               />
               <input
                 className="none-display-input"
                 type="text"
                 name="entry.1651142815"
-                value={dataForm.budgetValue?.label}
+                value={dataForm.budgetValue?.value || ''}
+                readOnly
               />
               <Select
+                instanceId="deadline"
                 options={Options.Deadline}
                 placeholder="Estimativa de prazo?"
                 onChange={changeSelectDataForm('deadlineValue')}
-                defaultValue={dataForm.deadlineValue}
               />
               <Select
+                instanceId="budget"
                 options={Options.BudgetValue}
                 placeholder="Estimativa de orçamento?"
                 onChange={changeSelectDataForm('budgetValue')}
-                defaultValue={dataForm.budgetValue}
               />
             </S.SelectGroup>
             <h2>Como conheceu a Uperttech?</h2>
@@ -155,7 +157,6 @@ const Budget: React.FC = () => {
               name="entry.215608498"
               label="Indicação de amigo"
               value="Indicação de amigo"
-              defaultValue="Não foi informado"
             />
             <CheckBox
               name="entry.215608498"
