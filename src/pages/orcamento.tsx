@@ -1,10 +1,10 @@
 import { useState, FormEvent, useEffect } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
+// import ReCAPTCHA from 'react-google-recaptcha'
 import InputPhone from 'react-number-format'
 import RSelect, { OptionTypeBase, Props as SelectProps } from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
-import { toast } from 'react-toastify'
+// import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
@@ -12,7 +12,7 @@ import { Input, TextArea, CheckBox } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
 import SEO from '~/components/SEO'
 
-const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
+// const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
 type SelectData = {
   value: string
@@ -35,57 +35,57 @@ const Budget: React.FC = () => {
   const { error: authError, loading, createBudget } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
 
-  const [recaptchaResponse, setRecaptchaResponse] = useState<
-    string | undefined
-  >()
+  // const [recaptchaResponse, setRecaptchaResponse] = useState<
+  //   string | undefined
+  // >()
 
   const [dataForm, setDataForm] = useState<DataForm>({})
 
-  const changeDataForm = (key: keyof typeof dataForm) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setDataForm({ ...dataForm, [key]: e.target.value })
+  // const changeDataForm = (key: keyof typeof dataForm) => (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => setDataForm({ ...dataForm, [key]: e.target.value })
 
   const changeSelectDataForm = (
     key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
   ) => (value: DataForm[typeof key]) =>
     setDataForm({ ...dataForm, [key]: value })
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault()
 
-    const {
-      name,
-      email,
-      company,
-      phone,
-      description,
-      deadlineValue,
-      budgetValue,
-      leadFromValue,
-      references
-    } = dataForm
+  //   const {
+  //     name,
+  //     email,
+  //     company,
+  //     phone,
+  //     description,
+  //     deadlineValue,
+  //     budgetValue,
+  //     leadFromValue,
+  //     references
+  //   } = dataForm
 
-    if (Object.values(dataForm).find(v => !!v)) {
-      window.scrollTo(0, 0)
-      return setError('Preencha todos os campos')
-    }
+  //   if (Object.values(dataForm).find(v => !!v)) {
+  //     window.scrollTo(0, 0)
+  //     return setError('Preencha todos os campos')
+  //   }
 
-    await createBudget({
-      name,
-      email,
-      company,
-      phone,
-      description,
-      references,
-      deadline: deadlineValue?.value,
-      budgetValue: budgetValue?.value,
-      leadFrom: leadFromValue?.value,
-      grecaptchaResponse: recaptchaResponse
-    })
+  //   await createBudget({
+  //     name,
+  //     email,
+  //     company,
+  //     phone,
+  //     description,
+  //     references,
+  //     deadline: deadlineValue?.value,
+  //     budgetValue: budgetValue?.value,
+  //     leadFrom: leadFromValue?.value,
+  //     grecaptchaResponse: recaptchaResponse
+  //   })
 
-    setRecaptchaResponse(undefined)
-    toast.success('Orçamento enviado com sucesso!')
-  }
+  //   setRecaptchaResponse(undefined)
+  //   toast.success('Orçamento enviado com sucesso!')
+  // }
 
   useEffect(() => {
     setError(authError)
@@ -232,14 +232,14 @@ const Budget: React.FC = () => {
             /> */}
           </fieldset>
           <S.WrapperRecaptchaAndButton>
-            {API_RECAPTCHA_KEY && (
+            {/* {API_RECAPTCHA_KEY && (
               <ReCAPTCHA
                 sitekey={API_RECAPTCHA_KEY}
                 onChange={(value: string | null) =>
                   value && setRecaptchaResponse(value)
                 }
               />
-            )}
+            )} */}
             <ActionButton
               text="Enviar"
               primary
