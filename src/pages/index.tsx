@@ -147,7 +147,7 @@ const Home: React.FC = () => {
             </S.SubtitleContact>
 
             {error && <ErrorDialog message={error} />}
-            <form
+            <S.Form
               // onSubmit={handleSubmit}
               method="post"
               action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGQNmUGUbGXgPQAAqIAbxj6JYeLo0ca8ScL5TO0-XiJBgSPw/formResponse"
@@ -179,7 +179,7 @@ const Home: React.FC = () => {
               <S.WrapperButton>
                 <ActionButton text="Enviar" primary type="submit" />
               </S.WrapperButton>
-            </form>
+            </S.Form>
           </S.WrapperContact>
         </S.Contact>
       </S.WrapperContainer>

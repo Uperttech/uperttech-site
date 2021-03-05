@@ -358,3 +358,8 @@ export const WrapperButton = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+export const Form = styled.form`
+  width: 100%;
+  max-width: 820px;
+`

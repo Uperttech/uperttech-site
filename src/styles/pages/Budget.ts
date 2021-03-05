@@ -144,7 +144,7 @@ export const StylesSelect = {
     return {
       ...defaultStyles,
       border: 0,
-      padding: 5
+      padding: '5px 20px'
     }
   }
 }
