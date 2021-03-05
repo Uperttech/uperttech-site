@@ -116,7 +116,6 @@ export const WrapperAbout = styled.div`
   width: 100%;
   max-width: 800px;
   margin: 30px auto;
-  /* padding: 0 30px; */
 `
 export const HeaderAbout = styled.div`
   margin-top: 150px;
@@ -210,7 +209,6 @@ export const WrapperServices = styled.div`
   max-width: 1200px;
   margin: 30px auto;
   min-height: 310px;
-  /* padding: 0 30px; */
 
   display: flex;
   align-items: flex-start;

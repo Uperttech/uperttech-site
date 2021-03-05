@@ -1,18 +1,14 @@
-import { useState, FormEvent, useEffect } from 'react'
-// import ReCAPTCHA from 'react-google-recaptcha'
+import { useState, useEffect } from 'react'
 import InputPhone from 'react-number-format'
 import RSelect, { OptionTypeBase, Props as SelectProps } from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
-// import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
 import { Input, TextArea, CheckBox } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
 import SEO from '~/components/SEO'
-
-// const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
 type SelectData = {
   value: string
@@ -32,60 +28,15 @@ type DataForm = {
 }
 
 const Budget: React.FC = () => {
-  const { error: authError, loading, createBudget } = useApp()
+  const { error: authError } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
 
-  // const [recaptchaResponse, setRecaptchaResponse] = useState<
-  //   string | undefined
-  // >()
-
   const [dataForm, setDataForm] = useState<DataForm>({})
-
-  // const changeDataForm = (key: keyof typeof dataForm) => (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => setDataForm({ ...dataForm, [key]: e.target.value })
 
   const changeSelectDataForm = (
     key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
   ) => (value: DataForm[typeof key]) =>
     setDataForm({ ...dataForm, [key]: value })
-
-  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-
-  //   const {
-  //     name,
-  //     email,
-  //     company,
-  //     phone,
-  //     description,
-  //     deadlineValue,
-  //     budgetValue,
-  //     leadFromValue,
-  //     references
-  //   } = dataForm
-
-  //   if (Object.values(dataForm).find(v => !!v)) {
-  //     window.scrollTo(0, 0)
-  //     return setError('Preencha todos os campos')
-  //   }
-
-  //   await createBudget({
-  //     name,
-  //     email,
-  //     company,
-  //     phone,
-  //     description,
-  //     references,
-  //     deadline: deadlineValue?.value,
-  //     budgetValue: budgetValue?.value,
-  //     leadFrom: leadFromValue?.value,
-  //     grecaptchaResponse: recaptchaResponse
-  //   })
-
-  //   setRecaptchaResponse(undefined)
-  //   toast.success('Orçamento enviado com sucesso!')
-  // }
 
   useEffect(() => {
     setError(authError)
@@ -107,7 +58,6 @@ const Budget: React.FC = () => {
       </S.MainContent>
 
       <S.SectionForm
-        // onSubmit={handleSubmit}
         method="post"
         action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSf-Up_irXDJKFfL1b8k3_G9NalEu1TZAonIyjYDEqRrYU-Cow/formResponse"
       >
@@ -123,14 +73,12 @@ const Budget: React.FC = () => {
                 type="text"
                 placeholder="Seu nome"
                 name="entry.128360191"
-                // onChange={changeDataForm('name')}
               />
               <Input
                 required
                 type="email"
                 placeholder="Seu email"
                 name="entry.6011279"
-                // onChange={changeDataForm('email')}
               />
             </S.InputGroup>
 
@@ -142,14 +90,12 @@ const Budget: React.FC = () => {
                 format="(##) # ####-####"
                 mask="_"
                 type="tel"
-                // onChange={changeDataForm('phone')}
               />
               <Input
                 name="entry.1858906124"
                 required
                 type="text"
                 placeholder="Nome da empresa ou projeto"
-                // onChange={changeDataForm('company')}
               />
             </S.InputGroup>
           </fieldset>
@@ -164,13 +110,11 @@ const Budget: React.FC = () => {
                 required
                 rows={5}
                 placeholder="Faça uma descrição da sua ideia"
-                // onChange={changeDataForm('description')}
                 name="entry.1415092291"
               />
               <TextArea
                 rows={5}
                 placeholder="Quais são suas referências (Opcional)"
-                // onChange={changeDataForm('references')}
                 name="entry.914415981"
               />
             </S.TextAreaGroup>
@@ -224,28 +168,9 @@ const Budget: React.FC = () => {
               label="Redes sociais (Facebook, Twitter, Linkedin)"
               value="Redes sociais (Facebook, Twitter, Linkedin)"
             />
-            {/* <Select
-              options={Options.LeadFrom}
-              placeholder="Como conheceu a Uperttech?"
-              onChange={changeSelectDataForm('leadFromValue')}
-              defaultValue={dataForm.leadFromValue}
-            /> */}
           </fieldset>
           <S.WrapperRecaptchaAndButton>
-            {/* {API_RECAPTCHA_KEY && (
-              <ReCAPTCHA
-                sitekey={API_RECAPTCHA_KEY}
-                onChange={(value: string | null) =>
-                  value && setRecaptchaResponse(value)
-                }
-              />
-            )} */}
-            <ActionButton
-              text="Enviar"
-              primary
-              type="submit"
-              // loading={loading}
-            />
+            <ActionButton text="Enviar" primary type="submit" />
           </S.WrapperRecaptchaAndButton>
         </S.WrapperSectionForm>
       </S.SectionForm>

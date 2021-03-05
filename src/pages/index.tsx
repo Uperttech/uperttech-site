@@ -5,44 +5,14 @@ import * as S from '~/styles/pages/Home'
 import SEO from '~/components/SEO'
 import { TextArea, Input } from '~/components/Form'
 import { ActionButton } from '~/components/ActionButton'
-import { useState, FormEvent, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useApp } from '~/providers/AppProvider'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import DropdownItem from '~/components/DropdownItem'
-// import { toast } from 'react-toastify'
-
-type DataForm = {
-  name?: string
-  email?: string
-  message?: string
-}
 
 const Home: React.FC = () => {
-  const [dataForm, setDataForm] = useState<DataForm>({})
-  const { error: appError, loading, sendContact } = useApp()
+  const { error: appError } = useApp()
   const [error, setError] = useState<string | undefined>(appError)
-
-  const changeDataForm = (key: keyof typeof dataForm) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setDataForm({ ...dataForm, [key]: e.target.value })
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const { name, email, message } = dataForm
-
-    if (!Object.values(dataForm).find(v => !!v)) {
-      return setError('Preencha todos os campos')
-    }
-
-    await sendContact({
-      name,
-      email,
-      message
-    })
-
-    // toast.success('Mensagem enviada com sucesso!')
-  }
 
   useEffect(() => {
     setError(appError)
@@ -148,7 +118,6 @@ const Home: React.FC = () => {
 
             {error && <ErrorDialog message={error} />}
             <S.Form
-              // onSubmit={handleSubmit}
               method="post"
               action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGQNmUGUbGXgPQAAqIAbxj6JYeLo0ca8ScL5TO0-XiJBgSPw/formResponse"
             >
@@ -158,14 +127,12 @@ const Home: React.FC = () => {
                   type="text"
                   placeholder="Seu nome"
                   name="entry.1904584939"
-                  // onChange={changeDataForm('name')}
                 />
                 <Input
                   required
                   type="email"
                   placeholder="Seu email"
                   name="entry.230414312"
-                  // onChange={changeDataForm('email')}
                 />
               </S.InputGroup>
               <TextArea
@@ -173,7 +140,6 @@ const Home: React.FC = () => {
                 rows={5}
                 placeholder="Sua mensagem"
                 name="entry.246867779"
-                // onChange={changeDataForm('message')}
               />
 
               <S.WrapperButton>
