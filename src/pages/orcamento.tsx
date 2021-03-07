@@ -6,7 +6,7 @@ import Navbar from '~/components/Navbar'
 import { ActionButton } from '~/components/ActionButton'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
-import { Input, TextArea, CheckBox } from '~/components/Form'
+import { Input, TextArea, CheckBox, OtherCheckBox } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
 import SEO from '~/components/SEO'
 
@@ -24,7 +24,7 @@ type DataForm = {
   references?: string
   deadlineValue?: SelectData
   budgetValue?: SelectData
-  leadFromValue?: SelectData
+  leadFromValue?: SelectData[]
 }
 
 const Budget: React.FC = () => {
@@ -114,7 +114,7 @@ const Budget: React.FC = () => {
               />
               <TextArea
                 rows={5}
-                placeholder="Quais são suas referências (Opcional)"
+                placeholder="Quais são suas referências? (opcional)"
                 name="entry.914415981"
               />
             </S.TextAreaGroup>
@@ -142,13 +142,13 @@ const Budget: React.FC = () => {
               <Select
                 instanceId="deadline"
                 options={Options.Deadline}
-                placeholder="Estimativa de prazo?"
+                placeholder="Estimativa de prazo"
                 onChange={changeSelectDataForm('deadlineValue')}
               />
               <Select
                 instanceId="budget"
                 options={Options.BudgetValue}
-                placeholder="Estimativa de orçamento?"
+                placeholder="Estimativa de orçamento"
                 onChange={changeSelectDataForm('budgetValue')}
               />
             </S.SelectGroup>
@@ -169,6 +169,7 @@ const Budget: React.FC = () => {
               label="Redes sociais (Facebook, Twitter, Linkedin)"
               value="Redes sociais (Facebook, Twitter, Linkedin)"
             />
+            <OtherCheckBox name="entry.215608498" />
           </fieldset>
           <S.WrapperRecaptchaAndButton>
             <ActionButton text="Enviar" primary type="submit" />

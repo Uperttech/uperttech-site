@@ -1,6 +1,6 @@
 export default {
   Deadline: [
-    { value: 'Menos de 1 mes', label: 'Menos de 1 Mês' },
+    { value: 'Menos de 1 mês', label: 'Menos de 1 mês' },
     { value: 'De 1 a 2 meses', label: 'De 1 a 2 meses' },
     { value: 'De 2 a 4 meses', label: 'De 2 a 4 meses' },
     { value: 'Mais de 4 meses', label: 'Mais de 4 meses' }
@@ -17,11 +17,11 @@ export default {
 
   LeadFrom: [
     { value: 'Indicacao de amigo', label: 'Indicação de amigo' },
-    { value: 'Pesquida no google', label: 'Pesquisa no Google' },
+    { value: 'Pesquisa no Google', label: 'Pesquisa no Google' },
     { value: 'Evento', label: 'Evento' },
     {
-      value: 'redes sociais (facebook, twitter, linkedin)',
-      label: 'Redes sociais (facebook, twitter, linkedin)'
+      value: 'Redes sociais (Facebook, Twitter, LinkedIn)',
+      label: 'Redes sociais (Facebook, Twitter, LinkedIn)'
     }
   ]
 }
