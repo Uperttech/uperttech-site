@@ -28,16 +28,22 @@ type DataForm = {
 }
 
 const Budget: React.FC = () => {
-  const { error: authError } = useApp()
+  const { error: authError, redirectSubmit } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
-
   const [dataForm, setDataForm] = useState<DataForm>({})
+  const [submitted, setSubmited] = useState(false)
 
   const changeSelectDataForm = (
     key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
   ) => (value: DataForm[typeof key]) =>
     setDataForm({ ...dataForm, [key]: value })
 
+  const onLoad = () => {
+    if (submitted) {
+      redirectSubmit('Seu orçamento foi enviado com sucesso !', '/')
+      setSubmited(false)
+    }
+  }
   useEffect(() => {
     setError(authError)
   }, [authError])
@@ -56,10 +62,17 @@ const Budget: React.FC = () => {
           </h4>
         </S.WrapperMainContent>
       </S.MainContent>
-
+      <iframe
+        name="hidden_iframe"
+        id="hidden_iframe"
+        style={{ display: 'none' }}
+        onLoad={onLoad}
+      />
       <S.SectionForm
         method="post"
         action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSf-Up_irXDJKFfL1b8k3_G9NalEu1TZAonIyjYDEqRrYU-Cow/formResponse"
+        target="hidden_iframe"
+        onSubmit={() => setSubmited(true)}
       >
         <S.WrapperSectionForm>
           {error && <ErrorDialog message={error} />}

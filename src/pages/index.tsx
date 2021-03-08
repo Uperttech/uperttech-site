@@ -1,7 +1,6 @@
 import Navbar from '~/components/Navbar'
 import Link from 'next/link'
 
-import * as S from '~/styles/pages/Home'
 import SEO from '~/components/SEO'
 import { TextArea, Input } from '~/components/Form'
 import { ActionButton } from '~/components/ActionButton'
@@ -9,10 +8,19 @@ import { useState, useEffect } from 'react'
 import { useApp } from '~/providers/AppProvider'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import DropdownItem from '~/components/DropdownItem'
+import * as S from '~/styles/pages/Home'
 
 const Home: React.FC = () => {
-  const { error: appError } = useApp()
+  const { error: appError, redirectSubmit } = useApp()
   const [error, setError] = useState<string | undefined>(appError)
+  const [submitted, setSubmited] = useState(false)
+
+  const onLoad = () => {
+    if (submitted) {
+      redirectSubmit('Sua mensagem foi enviada com sucesso', '/')
+      setSubmited(false)
+    }
+  }
 
   useEffect(() => {
     setError(appError)
@@ -115,11 +123,18 @@ const Home: React.FC = () => {
               Seu contato é muito importante para nós. Qualquer crítica, dúvida
               ou elogio fale conosco.
             </S.SubtitleContact>
-
+            <iframe
+              name="hidden_iframe"
+              id="hidden_iframe"
+              style={{ display: 'none' }}
+              onLoad={onLoad}
+            />
             {error && <ErrorDialog message={error} />}
             <S.Form
               method="post"
               action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGQNmUGUbGXgPQAAqIAbxj6JYeLo0ca8ScL5TO0-XiJBgSPw/formResponse"
+              target="hidden_iframe"
+              onSubmit={() => setSubmited(true)}
             >
               <S.InputGroup>
                 <Input
