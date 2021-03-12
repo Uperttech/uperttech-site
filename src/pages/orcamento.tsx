@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import InputPhone from 'react-number-format'
 import RSelect, { OptionTypeBase, Props as SelectProps } from 'react-select'
 import Options from '~/resources/options-select'
@@ -28,21 +28,44 @@ type DataForm = {
 }
 
 const Budget: React.FC = () => {
-  const { error: authError, redirectSubmit } = useApp()
+  const { error: authError, sendBudget, loading } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
   const [dataForm, setDataForm] = useState<DataForm>({})
-  const [submitted, setSubmited] = useState(false)
+
+  const changeDataForm = (key: keyof typeof dataForm) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setDataForm({ ...dataForm, [key]: e.target.value })
 
   const changeSelectDataForm = (
     key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
   ) => (value: DataForm[typeof key]) =>
     setDataForm({ ...dataForm, [key]: value })
 
-  const onLoad = () => {
-    if (submitted) {
-      redirectSubmit('Seu orçamento foi enviado com sucesso !', '/')
-      setSubmited(false)
-    }
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+
+    const {
+      name,
+      email,
+      company,
+      phone,
+      description,
+      deadlineValue,
+      budgetValue,
+      leadFromValue,
+      references
+    } = dataForm
+
+    const formData = new FormData()
+    formData.append('entry.128360191', name)
+    formData.append('entry.6011279', email)
+    formData.append('entry.1501489900', phone)
+    formData.append('entry.1858906124', company)
+    formData.append('entry.1415092291', description)
+    formData.append('entry.914415981', references)
+    formData.append('entry.264284994', deadlineValue.value)
+    formData.append('entry.1651142815', budgetValue.value)
+    sendBudget('Seu orçamento foi enviado com sucesso !', '/', formData)
   }
   useEffect(() => {
     setError(authError)
@@ -62,17 +85,10 @@ const Budget: React.FC = () => {
           </h4>
         </S.WrapperMainContent>
       </S.MainContent>
-      <iframe
-        name="hidden_iframe"
-        id="hidden_iframe"
-        style={{ display: 'none' }}
-        onLoad={onLoad}
-      />
       <S.SectionForm
-        method="post"
-        action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSf-Up_irXDJKFfL1b8k3_G9NalEu1TZAonIyjYDEqRrYU-Cow/formResponse"
+        id="form-budget"
         target="hidden_iframe"
-        onSubmit={() => setSubmited(true)}
+        onSubmit={handleSubmit}
       >
         <S.WrapperSectionForm>
           {error && <ErrorDialog message={error} />}
@@ -85,19 +101,19 @@ const Budget: React.FC = () => {
                 required
                 type="text"
                 placeholder="Seu nome"
-                name="entry.128360191"
+                onChange={changeDataForm('name')}
               />
               <Input
                 required
                 type="email"
                 placeholder="Seu email"
-                name="entry.6011279"
+                onChange={changeDataForm('email')}
               />
             </S.InputGroup>
 
             <S.InputGroup>
               <InputPhone
-                name="entry.1501489900"
+                onChange={changeDataForm('phone')}
                 required
                 placeholder="Telefone"
                 format="(##) # ####-####"
@@ -105,7 +121,7 @@ const Budget: React.FC = () => {
                 type="tel"
               />
               <Input
-                name="entry.1858906124"
+                onChange={changeDataForm('company')}
                 required
                 type="text"
                 placeholder="Nome da empresa ou projeto"
@@ -123,12 +139,12 @@ const Budget: React.FC = () => {
                 required
                 rows={5}
                 placeholder="Faça uma descrição da sua ideia"
-                name="entry.1415092291"
+                onChange={changeDataForm('description')}
               />
               <TextArea
                 rows={5}
                 placeholder="Quais são suas referências? (opcional)"
-                name="entry.914415981"
+                onChange={changeDataForm('references')}
               />
             </S.TextAreaGroup>
           </fieldset>
@@ -138,20 +154,6 @@ const Budget: React.FC = () => {
               <h2>Mais detalhes:</h2>
             </legend>
             <S.SelectGroup>
-              <input
-                type="text"
-                className="none-display-input"
-                name="entry.264284994"
-                value={dataForm.deadlineValue?.value || ''}
-                readOnly
-              />
-              <input
-                className="none-display-input"
-                type="text"
-                name="entry.1651142815"
-                value={dataForm.budgetValue?.value || ''}
-                readOnly
-              />
               <Select
                 instanceId="deadline"
                 options={Options.Deadline}
@@ -185,7 +187,12 @@ const Budget: React.FC = () => {
             <OtherCheckBox name="entry.215608498" />
           </fieldset>
           <S.WrapperRecaptchaAndButton>
-            <ActionButton text="Enviar" primary type="submit" />
+            <ActionButton
+              text="Enviar"
+              primary
+              type="submit"
+              loading={loading}
+            />
           </S.WrapperRecaptchaAndButton>
         </S.WrapperSectionForm>
       </S.SectionForm>

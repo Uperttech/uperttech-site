@@ -23,7 +23,10 @@ const rotate = keyframes`
   }
 `
 
-const StyledActionButton = styled.button<ActionButtonProps>`
+const StyledActionButton = styled.button.withConfig({
+  shouldForwardProp: (prop, defPropValFN) =>
+    !['loading'].includes(prop as string) && defPropValFN(prop)
+})<ActionButtonProps>`
   background-color: ${props => (props.primary ? '#4C71FB' : '#c2c2c2')};
   display: block;
   color: #fff;

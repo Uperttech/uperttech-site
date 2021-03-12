@@ -4,22 +4,37 @@ import Link from 'next/link'
 import SEO from '~/components/SEO'
 import { TextArea, Input } from '~/components/Form'
 import { ActionButton } from '~/components/ActionButton'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { useApp } from '~/providers/AppProvider'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import DropdownItem from '~/components/DropdownItem'
 import * as S from '~/styles/pages/Home'
 
-const Home: React.FC = () => {
-  const { error: appError, redirectSubmit } = useApp()
-  const [error, setError] = useState<string | undefined>(appError)
-  const [submitted, setSubmited] = useState(false)
+type DataForm = {
+  name?: string
+  email?: string
+  message?: string
+}
 
-  const onLoad = () => {
-    if (submitted) {
-      redirectSubmit('Sua mensagem foi enviada com sucesso', '/')
-      setSubmited(false)
-    }
+const Home: React.FC = () => {
+  const { error: appError, sendContact, loading } = useApp()
+
+  const [dataForm, setDataForm] = useState<DataForm>({})
+  const [error, setError] = useState<string | undefined>(appError)
+
+  const changeDataForm = (key: keyof typeof dataForm) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setDataForm({ ...dataForm, [key]: e.target.value })
+
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    const { name, email, message } = dataForm
+    const formData = new FormData()
+    formData.append('entry.1904584939', name)
+    formData.append('entry.230414312', email)
+    formData.append('entry.246867779', message)
+    sendContact('Sua mensagem foi enviada com sucesso !', '/', formData)
+    setDataForm({ name: '', email: '', message: '' })
   }
 
   useEffect(() => {
@@ -123,42 +138,42 @@ const Home: React.FC = () => {
               Seu contato é muito importante para nós. Qualquer crítica, dúvida
               ou elogio fale conosco.
             </S.SubtitleContact>
-            <iframe
-              name="hidden_iframe"
-              id="hidden_iframe"
-              style={{ display: 'none' }}
-              onLoad={onLoad}
-            />
             {error && <ErrorDialog message={error} />}
-            <S.Form
-              method="post"
-              action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdGQNmUGUbGXgPQAAqIAbxj6JYeLo0ca8ScL5TO0-XiJBgSPw/formResponse"
-              target="hidden_iframe"
-              onSubmit={() => setSubmited(true)}
-            >
+            <S.Form target="hidden_iframe" onSubmit={handleSubmit}>
               <S.InputGroup>
                 <Input
+                  id="input-name"
                   required
                   type="text"
                   placeholder="Seu nome"
-                  name="entry.1904584939"
+                  value={dataForm.name || ''}
+                  onChange={changeDataForm('name')}
                 />
                 <Input
+                  id="input-email"
                   required
                   type="email"
                   placeholder="Seu email"
-                  name="entry.230414312"
+                  value={dataForm.email || ''}
+                  onChange={changeDataForm('email')}
                 />
               </S.InputGroup>
               <TextArea
+                id="input-message"
                 required
                 rows={5}
                 placeholder="Sua mensagem"
-                name="entry.246867779"
+                value={dataForm.message || ''}
+                onChange={changeDataForm('message')}
               />
 
               <S.WrapperButton>
-                <ActionButton text="Enviar" primary type="submit" />
+                <ActionButton
+                  text="Enviar"
+                  primary
+                  type="submit"
+                  loading={loading}
+                />
               </S.WrapperButton>
             </S.Form>
           </S.WrapperContact>
