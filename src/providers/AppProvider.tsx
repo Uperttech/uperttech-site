@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useRouter } from 'next/router'
 import { createContext, useContext, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import { API } from '~/util/API-FORM'
@@ -9,14 +8,11 @@ interface AppProviderState {
 }
 
 interface AppContextData extends AppProviderState {
-  sendContact: (message: string, url: string, data: FormData) => void
-  sendBudget: (message: string, url: string, data: FormData) => void
+  sendContact(message: string, data: FormData): Promise<void>
+  sendBudget(message: string, data: FormData): Promise<void>
 }
 
-const AppContext = createContext<AppContextData>({
-  sendContact: () => {},
-  sendBudget: () => {}
-})
+const AppContext = createContext<AppContextData>({} as AppContextData)
 
 type Provider<T> = React.FC<{ children: JSX.Element[] | JSX.Element }> & {
   Consumer: React.Consumer<T>
@@ -39,53 +35,48 @@ const authReducer = (
       return {
         ...state,
         loading: false,
-        error: undefined
+        error: ''
       }
     case AppActionTypes.Error:
-      return { ...state, loading: false, error: action.payload?.error }
+      return { ...state, loading: false, error: action.payload.error }
     default:
       throw new Error('Unknown action.type')
   }
 }
 
 const AppProvider: Provider<AppContextData> = props => {
-  const router = useRouter()
   const [state, dispatch] = useReducer(authReducer, {
     error: undefined,
     loading: false
   })
 
-  const sendContact = async (message: string, url: string, data: FormData) => {
+  const sendContact = async (message: string, data: FormData) => {
     try {
       dispatch({ type: AppActionTypes.Start })
-
       await API.sendContact(data)
       toast.success(message)
-      router.push(url).then(() => window.scrollTo(0, 0))
       dispatch({ type: AppActionTypes.Success })
-    } catch {
+    } catch (err) {
       dispatch({
         type: AppActionTypes.Error,
         payload: {
-          error: 'Não foi possível enviar sua menssagem, tente novamente!'
+          error: err.message
         }
       })
     }
   }
 
-  const sendBudget = async (message: string, url: string, data: FormData) => {
+  const sendBudget = async (message: string, data: FormData) => {
     try {
       dispatch({ type: AppActionTypes.Start })
-
       await API.sendBudget(data)
       toast.success(message)
-      router.push(url).then(() => window.scrollTo(0, 0))
       dispatch({ type: AppActionTypes.Success })
-    } catch {
+    } catch (err) {
       dispatch({
         type: AppActionTypes.Error,
         payload: {
-          error: 'Não foi possível enviar seu orçamento, tente novamente!'
+          error: err.message
         }
       })
     }

@@ -1,5 +1,6 @@
 import Navbar from '~/components/Navbar'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import SEO from '~/components/SEO'
 import { TextArea, Input } from '~/components/Form'
@@ -10,33 +11,21 @@ import { ErrorDialog } from '~/components/ErrorDialog'
 import DropdownItem from '~/components/DropdownItem'
 import * as S from '~/styles/pages/Home'
 
-type DataForm = {
-  name?: string
-  email?: string
-  message?: string
-}
-
 const Home: React.FC = () => {
+  const router = useRouter()
   const { error: appError, sendContact, loading } = useApp()
-
-  const [dataForm, setDataForm] = useState<DataForm>({})
   const [error, setError] = useState<string | undefined>(appError)
 
-  const changeDataForm = (key: keyof typeof dataForm) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setDataForm({ ...dataForm, [key]: e.target.value })
-
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    const { name, email, message } = dataForm
-    const formData = new FormData()
-    formData.append('entry.1904584939', name)
-    formData.append('entry.230414312', email)
-    formData.append('entry.246867779', message)
-    sendContact('Sua mensagem foi enviada com sucesso !', '/', formData)
-    setDataForm({ name: '', email: '', message: '' })
+    const form = event.target as HTMLFormElement
+    const formData = new FormData(form)
+    await sendContact('Sua mensagem foi enviada com sucesso', formData)
+    if (!loading && !error) {
+      router.push('/').then(() => window.scrollTo(0, 0))
+      form.reset()
+    }
   }
-
   useEffect(() => {
     setError(appError)
   }, [appError])
@@ -57,7 +46,11 @@ const Home: React.FC = () => {
             <Link href="/orcamento" passHref>
               <S.NavigateToBudget>Solicitar orçamento</S.NavigateToBudget>
             </Link>
-            <S.ArtImageBackground src="/art.svg" alt="background" />
+            <S.ArtImageBackground
+              src="/art.svg"
+              loading="lazy"
+              alt="background"
+            />
           </S.WrapperMainContent>
         </S.MainContent>
 
@@ -139,23 +132,21 @@ const Home: React.FC = () => {
               ou elogio fale conosco.
             </S.SubtitleContact>
             {error && <ErrorDialog message={error} />}
-            <S.Form target="hidden_iframe" onSubmit={handleSubmit}>
+            <S.Form onSubmit={handleSubmit}>
               <S.InputGroup>
                 <Input
                   id="input-name"
                   required
                   type="text"
                   placeholder="Seu nome"
-                  value={dataForm.name || ''}
-                  onChange={changeDataForm('name')}
+                  name="entry.1904584939"
                 />
                 <Input
                   id="input-email"
                   required
                   type="email"
                   placeholder="Seu email"
-                  value={dataForm.email || ''}
-                  onChange={changeDataForm('email')}
+                  name="entry.230414312"
                 />
               </S.InputGroup>
               <TextArea
@@ -163,8 +154,7 @@ const Home: React.FC = () => {
                 required
                 rows={5}
                 placeholder="Sua mensagem"
-                value={dataForm.message || ''}
-                onChange={changeDataForm('message')}
+                name="entry.246867779"
               />
 
               <S.WrapperButton>
