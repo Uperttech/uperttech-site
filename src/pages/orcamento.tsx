@@ -16,13 +16,7 @@ type SelectData = {
   label: string
 }
 
-type DataForm = {
-  name?: string
-  email?: string
-  phone?: string
-  company?: string
-  description?: string
-  references?: string
+type SelectFormData = {
   deadlineValue?: SelectData
   budgetValue?: SelectData
   leadFromValue?: SelectData[]
@@ -32,17 +26,17 @@ const Budget: React.FC = () => {
   const router = useRouter()
   const { error: authError, sendBudget, loading } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
-  const [dataForm, setDataForm] = useState<DataForm>({})
+  const [dataForm, setDataForm] = useState<SelectFormData>({})
 
-  const changeSelectDataForm = (
-    key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
-  ) => (value: DataForm[typeof key]) =>
-    setDataForm({ ...dataForm, [key]: value })
+  const changeSelectDataForm = (key: keyof SelectFormData) => (
+    value: SelectFormData[typeof key]
+  ) => setDataForm({ ...dataForm, [key]: value })
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     const form = event.target as HTMLFormElement
     const formData = new FormData(form)
+
     await sendBudget('Seu orçamento foi enviado com sucesso', formData)
 
     if (!loading && !error) {

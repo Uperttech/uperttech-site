@@ -1,4 +1,4 @@
-export const API = {
+export const googleFormsAPI = {
   sendContact: async (data: FormData): Promise<void> => {
     const response = await fetch('/api/contact_form', {
       method: 'POST',

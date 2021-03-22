@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useReducer } from 'react'
 import { toast } from 'react-toastify'
-import { API } from '~/util/API-FORM'
+import { googleFormsAPI } from '~/util/googleFormsAPI'
 interface AppProviderState {
   error?: string
   loading?: boolean
@@ -50,11 +50,11 @@ const AppProvider: Provider<AppContextData> = props => {
     loading: false
   })
 
-  const sendContact = async (message: string, data: FormData) => {
+  const sendContact = async (successMessage: string, data: FormData) => {
     try {
       dispatch({ type: AppActionTypes.Start })
-      await API.sendContact(data)
-      toast.success(message)
+      await googleFormsAPI.sendContact(data)
+      toast.success(successMessage)
       dispatch({ type: AppActionTypes.Success })
     } catch (err) {
       dispatch({
@@ -66,11 +66,11 @@ const AppProvider: Provider<AppContextData> = props => {
     }
   }
 
-  const sendBudget = async (message: string, data: FormData) => {
+  const sendBudget = async (successMessage: string, data: FormData) => {
     try {
       dispatch({ type: AppActionTypes.Start })
-      await API.sendBudget(data)
-      toast.success(message)
+      await googleFormsAPI.sendBudget(data)
+      toast.success(successMessage)
       dispatch({ type: AppActionTypes.Success })
     } catch (err) {
       dispatch({
