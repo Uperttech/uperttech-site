@@ -23,7 +23,10 @@ const rotate = keyframes`
   }
 `
 
-const StyledActionButton = styled.button<ActionButtonProps>`
+const StyledActionButton = styled.button.withConfig({
+  shouldForwardProp: (prop, defPropValFN) =>
+    !['loading'].includes(prop as string) && defPropValFN(prop)
+})<ActionButtonProps>`
   background-color: ${props => (props.primary ? '#4C71FB' : '#c2c2c2')};
   display: block;
   color: #fff;
@@ -32,7 +35,7 @@ const StyledActionButton = styled.button<ActionButtonProps>`
   border: 0;
   padding: 15px 25px;
   width: 100%;
-  max-width: 420px;
+  /* max-width: 420px; */
   height: 50px;
   text-align: center;
   font-size: 17px;

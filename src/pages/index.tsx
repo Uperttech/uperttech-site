@@ -1,49 +1,31 @@
 import Navbar from '~/components/Navbar'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import * as S from '~/styles/pages/Home'
 import SEO from '~/components/SEO'
 import { TextArea, Input } from '~/components/Form'
 import { ActionButton } from '~/components/ActionButton'
-import { useState, FormEvent, useEffect } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { useApp } from '~/providers/AppProvider'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import DropdownItem from '~/components/DropdownItem'
-// import { toast } from 'react-toastify'
-
-type DataForm = {
-  name?: string
-  email?: string
-  message?: string
-}
+import * as S from '~/styles/pages/Home'
 
 const Home: React.FC = () => {
-  const [dataForm, setDataForm] = useState<DataForm>({})
-  const { error: appError, loading, sendContact } = useApp()
+  const router = useRouter()
+  const { error: appError, sendContact, loading } = useApp()
   const [error, setError] = useState<string | undefined>(appError)
 
-  const changeDataForm = (key: keyof typeof dataForm) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setDataForm({ ...dataForm, [key]: e.target.value })
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const { name, email, message } = dataForm
-
-    if (!Object.values(dataForm).find(v => !!v)) {
-      return setError('Preencha todos os campos')
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault()
+    const form = event.target as HTMLFormElement
+    const formData = new FormData(form)
+    await sendContact('Sua mensagem foi enviada com sucesso', formData)
+    if (!loading && !error) {
+      router.push('/').then(() => window.scrollTo(0, 0))
+      form.reset()
     }
-
-    await sendContact({
-      name,
-      email,
-      message
-    })
-
-    // toast.success('Mensagem enviada com sucesso!')
   }
-
   useEffect(() => {
     setError(appError)
   }, [appError])
@@ -64,7 +46,11 @@ const Home: React.FC = () => {
             <Link href="/orcamento" passHref>
               <S.NavigateToBudget>Solicitar orçamento</S.NavigateToBudget>
             </Link>
-            <S.ArtImageBackground src="/art.svg" alt="background" />
+            <S.ArtImageBackground
+              src="/art.svg"
+              loading="lazy"
+              alt="background"
+            />
           </S.WrapperMainContent>
         </S.MainContent>
 
@@ -141,34 +127,34 @@ const Home: React.FC = () => {
             <h2>Entre em contato conosco</h2>
           </S.WrapperTitleContact>
           <S.WrapperContact>
-            {/*
-
             <S.SubtitleContact>
               Seu contato é muito importante para nós. Qualquer crítica, dúvida
               ou elogio fale conosco.
             </S.SubtitleContact>
-
             {error && <ErrorDialog message={error} />}
-            <form onSubmit={handleSubmit}>
+            <S.Form onSubmit={handleSubmit}>
               <S.InputGroup>
                 <Input
+                  id="input-name"
                   required
                   type="text"
                   placeholder="Seu nome"
-                  onChange={changeDataForm('name')}
+                  name="entry.1904584939"
                 />
                 <Input
+                  id="input-email"
                   required
                   type="email"
                   placeholder="Seu email"
-                  onChange={changeDataForm('email')}
+                  name="entry.230414312"
                 />
               </S.InputGroup>
               <TextArea
+                id="input-message"
                 required
                 rows={5}
                 placeholder="Sua mensagem"
-                onChange={changeDataForm('message')}
+                name="entry.246867779"
               />
 
               <S.WrapperButton>
@@ -179,15 +165,7 @@ const Home: React.FC = () => {
                   loading={loading}
                 />
               </S.WrapperButton>
-            </form> */}
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSddGyufP7tk8O7wcqTpm-qvC-oh-1rByKU9lGYtLbNYh5IWog/viewform?embedded=true"
-              width="900"
-              height="1000"
-              frameBorder="0"
-            >
-              Carregando…
-            </iframe>
+            </S.Form>
           </S.WrapperContact>
         </S.Contact>
       </S.WrapperContainer>

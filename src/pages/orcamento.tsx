@@ -1,90 +1,48 @@
-import { useState, FormEvent, useEffect } from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
+import { useState, useEffect, FormEvent } from 'react'
+import { useRouter } from 'next/router'
 import InputPhone from 'react-number-format'
 import RSelect, { OptionTypeBase, Props as SelectProps } from 'react-select'
 import Options from '~/resources/options-select'
 import Navbar from '~/components/Navbar'
-import { toast } from 'react-toastify'
 import { ActionButton } from '~/components/ActionButton'
 import { ErrorDialog } from '~/components/ErrorDialog'
 import { useApp } from '~/providers/AppProvider'
-import { Input, TextArea } from '~/components/Form'
+import { Input, TextArea, CheckBox, OtherCheckBox } from '~/components/Form'
 import * as S from '~/styles/pages/Budget'
 import SEO from '~/components/SEO'
-
-const API_RECAPTCHA_KEY = process.env.NEXT_PUBLIC_API_KEY_RECAPTCHA
 
 type SelectData = {
   value: string
   label: string
 }
 
-type DataForm = {
-  name?: string
-  email?: string
-  phone?: string
-  company?: string
-  description?: string
-  references?: string
+type SelectFormData = {
   deadlineValue?: SelectData
   budgetValue?: SelectData
-  leadFromValue?: SelectData
+  leadFromValue?: SelectData[]
 }
 
 const Budget: React.FC = () => {
-  const { error: authError, loading, createBudget } = useApp()
+  const router = useRouter()
+  const { error: authError, sendBudget, loading } = useApp()
   const [error, setError] = useState<string | undefined>(authError)
+  const [dataForm, setDataForm] = useState<SelectFormData>({})
 
-  const [recaptchaResponse, setRecaptchaResponse] = useState<
-    string | undefined
-  >()
+  const changeSelectDataForm = (key: keyof SelectFormData) => (
+    value: SelectFormData[typeof key]
+  ) => setDataForm({ ...dataForm, [key]: value })
 
-  const [dataForm, setDataForm] = useState<DataForm>({})
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault()
+    const form = event.target as HTMLFormElement
+    const formData = new FormData(form)
 
-  const changeDataForm = (key: keyof typeof dataForm) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setDataForm({ ...dataForm, [key]: e.target.value })
+    await sendBudget('Seu orçamento foi enviado com sucesso', formData)
 
-  const changeSelectDataForm = (
-    key: keyof Pick<DataForm, 'deadlineValue' | 'budgetValue' | 'leadFromValue'>
-  ) => (value: DataForm[typeof key]) =>
-    setDataForm({ ...dataForm, [key]: value })
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const {
-      name,
-      email,
-      company,
-      phone,
-      description,
-      deadlineValue,
-      budgetValue,
-      leadFromValue,
-      references
-    } = dataForm
-
-    if (Object.values(dataForm).find(v => !!v)) {
-      window.scrollTo(0, 0)
-      return setError('Preencha todos os campos')
+    if (!loading && !error) {
+      router.push('/').then(() => window.scrollTo(0, 0))
+      form.reset()
     }
-
-    await createBudget({
-      name,
-      email,
-      company,
-      phone,
-      description,
-      references,
-      deadline: deadlineValue?.value,
-      budgetValue: budgetValue?.value,
-      leadFrom: leadFromValue?.value,
-      grecaptchaResponse: recaptchaResponse
-    })
-
-    setRecaptchaResponse(undefined)
-    toast.success('Orçamento enviado com sucesso!')
   }
 
   useEffect(() => {
@@ -100,15 +58,14 @@ const Budget: React.FC = () => {
         <S.WrapperMainContent>
           <h1>Faça seu orçamento </h1>
           <h4>
-            {/* Não sabe por onde começar? Encaminhe sua ideia que ajudamos a tornar
-            realidade. */}
+            Não sabe por onde começar? Encaminhe sua ideia que ajudamos a tornar
+            realidade.
           </h4>
         </S.WrapperMainContent>
       </S.MainContent>
-
-      <S.SectionForm onSubmit={handleSubmit}>
+      <S.SectionForm id="form-budget" onSubmit={handleSubmit}>
         <S.WrapperSectionForm>
-          {/* {error && <ErrorDialog message={error} />}
+          {error && <ErrorDialog message={error} />}
           <fieldset>
             <legend>
               <h2>Sobre você: </h2>
@@ -118,13 +75,13 @@ const Budget: React.FC = () => {
                 required
                 type="text"
                 placeholder="Seu nome"
-                onChange={changeDataForm('name')}
+                name="entry.128360191"
               />
               <Input
                 required
                 type="email"
                 placeholder="Seu email"
-                onChange={changeDataForm('email')}
+                name="entry.6011279"
               />
             </S.InputGroup>
 
@@ -135,13 +92,13 @@ const Budget: React.FC = () => {
                 format="(##) # ####-####"
                 mask="_"
                 type="tel"
-                onChange={changeDataForm('phone')}
+                name="entry.1501489900"
               />
               <Input
+                name="entry.1858906124"
                 required
                 type="text"
                 placeholder="Nome da empresa ou projeto"
-                onChange={changeDataForm('company')}
               />
             </S.InputGroup>
           </fieldset>
@@ -156,13 +113,12 @@ const Budget: React.FC = () => {
                 required
                 rows={5}
                 placeholder="Faça uma descrição da sua ideia"
-                onChange={changeDataForm('description')}
+                name="entry.1415092291"
               />
               <TextArea
-                required
                 rows={5}
-                placeholder="Quais são suas referências (Opcional)"
-                onChange={changeDataForm('references')}
+                placeholder="Quais são suas referências? (opcional)"
+                name="entry.914415981"
               />
             </S.TextAreaGroup>
           </fieldset>
@@ -171,52 +127,61 @@ const Budget: React.FC = () => {
             <legend>
               <h2>Mais detalhes:</h2>
             </legend>
-
             <S.SelectGroup>
-              <Select
-                options={Options.Deadline}
-                placeholder="Estimativa de prazo?"
-                onChange={changeSelectDataForm('deadlineValue')}
-                defaultValue={dataForm.deadlineValue}
+              <input
+                type="text"
+                className="none-display-input"
+                name="entry.264284994"
+                value={dataForm.deadlineValue?.value || ''}
+                readOnly
+              />
+              <input
+                className="none-display-input"
+                type="text"
+                name="entry.1651142815"
+                value={dataForm.budgetValue?.value || ''}
+                readOnly
               />
               <Select
+                instanceId="deadline"
+                options={Options.Deadline}
+                placeholder="Estimativa de prazo"
+                onChange={changeSelectDataForm('deadlineValue')}
+              />
+              <Select
+                instanceId="budget"
                 options={Options.BudgetValue}
-                placeholder="Estimativa de orçamento?"
+                placeholder="Estimativa de orçamento"
                 onChange={changeSelectDataForm('budgetValue')}
-                defaultValue={dataForm.budgetValue}
               />
             </S.SelectGroup>
-            <Select
-              options={Options.LeadFrom}
-              placeholder="Como conheceu a Uperttech?"
-              onChange={changeSelectDataForm('leadFromValue')}
-              defaultValue={dataForm.leadFromValue}
+            <h2>Como conheceu a Uperttech?</h2>
+            <CheckBox
+              name="entry.215608498"
+              label="Indicação de amigo"
+              value="Indicação de amigo"
             />
+            <CheckBox
+              name="entry.215608498"
+              label="Pesquisa no Google"
+              value="Pesquisa no Google"
+            />
+            <CheckBox name="entry.215608498" label="Evento" value="Evento" />
+            <CheckBox
+              name="entry.215608498"
+              label="Redes sociais (Facebook, Twitter, Linkedin)"
+              value="Redes sociais (Facebook, Twitter, Linkedin)"
+            />
+            <OtherCheckBox name="entry.215608498" />
           </fieldset>
           <S.WrapperRecaptchaAndButton>
-            {API_RECAPTCHA_KEY && (
-              <ReCAPTCHA
-                sitekey={API_RECAPTCHA_KEY}
-                onChange={(value: string | null) =>
-                  value && setRecaptchaResponse(value)
-                }
-              />
-            )}
             <ActionButton
               text="Enviar"
               primary
               type="submit"
               loading={loading}
             />
-          </S.WrapperRecaptchaAndButton> */}
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLScUGU93JI2qTXQ4Pi2RJ5vkKqXKbG4I0A9viLgfIHZAAe78ww/viewform?embedded=true"
-            width="900"
-            height="1000"
-            frameBorder="0"
-          >
-            Carregando…
-          </iframe>
+          </S.WrapperRecaptchaAndButton>
         </S.WrapperSectionForm>
       </S.SectionForm>
     </S.Container>

@@ -1,28 +1,24 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, useContext, useReducer } from 'react'
-import { API, Budget, ContactData } from '../util/API'
-
+import { toast } from 'react-toastify'
+import { googleFormsAPI } from '~/util/googleFormsAPI'
 interface AppProviderState {
   error?: string
   loading?: boolean
 }
 
 interface AppContextData extends AppProviderState {
-  createBudget: (budgetData: Budget) => Promise<void>
-  sendContact: (contactData: ContactData) => Promise<void>
+  sendContact(message: string, data: FormData): Promise<void>
+  sendBudget(message: string, data: FormData): Promise<void>
 }
 
-const AppContext = createContext<AppContextData>({
-  createBudget: async () => {},
-  sendContact: async () => {}
-})
+const AppContext = createContext<AppContextData>({} as AppContextData)
 
 type Provider<T> = React.FC<{ children: JSX.Element[] | JSX.Element }> & {
   Consumer: React.Consumer<T>
 }
 
 enum AppActionTypes {
-  EmptyRecaptcha,
   Start,
   Success,
   Error
@@ -33,18 +29,16 @@ const authReducer = (
   action: { type: AppActionTypes; payload?: AppProviderState }
 ) => {
   switch (action.type) {
-    case AppActionTypes.EmptyRecaptcha:
-      return { ...state, error: 'Preencha o reCAPTCHA' }
     case AppActionTypes.Start:
       return { ...state, loading: true }
     case AppActionTypes.Success:
       return {
         ...state,
         loading: false,
-        error: undefined
+        error: ''
       }
     case AppActionTypes.Error:
-      return { ...state, loading: false, error: action.payload?.error }
+      return { ...state, loading: false, error: action.payload.error }
     default:
       throw new Error('Unknown action.type')
   }
@@ -56,16 +50,11 @@ const AppProvider: Provider<AppContextData> = props => {
     loading: false
   })
 
-  const createBudget = async (budgetData: Budget) => {
+  const sendContact = async (successMessage: string, data: FormData) => {
     try {
-      if (!budgetData.grecaptchaResponse) {
-        return dispatch({ type: AppActionTypes.EmptyRecaptcha })
-      }
-
       dispatch({ type: AppActionTypes.Start })
-
-      await API.createBudget(budgetData)
-
+      await googleFormsAPI.sendContact(data)
+      toast.success(successMessage)
       dispatch({ type: AppActionTypes.Success })
     } catch (err) {
       dispatch({
@@ -77,10 +66,11 @@ const AppProvider: Provider<AppContextData> = props => {
     }
   }
 
-  const sendContact = async (contactData: ContactData) => {
+  const sendBudget = async (successMessage: string, data: FormData) => {
     try {
       dispatch({ type: AppActionTypes.Start })
-      await API.sendContact(contactData)
+      await googleFormsAPI.sendBudget(data)
+      toast.success(successMessage)
       dispatch({ type: AppActionTypes.Success })
     } catch (err) {
       dispatch({
@@ -91,12 +81,11 @@ const AppProvider: Provider<AppContextData> = props => {
       })
     }
   }
-
   const { error, loading } = state
 
   return (
     <AppContext.Provider
-      value={{ sendContact, createBudget, error, loading }}
+      value={{ sendContact, error, loading, sendBudget }}
       {...props}
     />
   )
