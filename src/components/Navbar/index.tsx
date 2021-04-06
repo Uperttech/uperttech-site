@@ -52,7 +52,7 @@ const Header: React.FC = () => {
       )}
       <S.Container toggleBackground={toggleBackgroundHeader}>
         <Link href="/" passHref>
-          <S.Logo src="/logo.png" alt="Uperttech" />
+          <S.Logo src="/uperttech-text-black.png" alt="Uperttech" />
         </Link>
         <S.Navigation>
           <Link href="/#quemsomos">
